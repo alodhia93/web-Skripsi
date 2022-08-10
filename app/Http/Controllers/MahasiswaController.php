@@ -18,7 +18,7 @@ class MahasiswaController extends Controller
     {
         $ms = Mahasiswa::all()->last();
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080//api/rest/process/procTrain?nim='. $ms->nim)->json();
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $ms->nim)->json();
         
         $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
 

@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('index');
+    $halaman = '/';
+    return view('index', compact('halaman'));
+});
+
+Route::get('/about', function () {
+    $halaman = 'about';
+    return view('about', compact('halaman'));
 });
 
 Route::get('training', 'TrainingController@index');
