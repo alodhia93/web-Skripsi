@@ -12,6 +12,11 @@ class Mahasiswa extends Model
     
     public $incrementing = false;
 
+    public function getRouteKeyName()
+    {
+        return 'nim';
+    }
+
     protected $fillable = [
         'nama',
         'nim',

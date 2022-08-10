@@ -15,10 +15,11 @@ class TrainingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public $halaman = 'training';
     public function index()
     {
         $training = Training::all();
-        return view('training.index', compact('training'));
+        return view('training.index', compact('halaman'));
     }
 
     /**

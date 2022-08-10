@@ -14,15 +14,20 @@ class MahasiswaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    //public $halaman = 'mahasiswa';
+
     public function index()
     {
-        $ms = Mahasiswa::all()->last();
+        $mahasiswa = Mahasiswa::all();
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $ms->nim)->json();
+        $halaman = 'mahasiswa';
+        return view('mahasiswa.index', compact('mahasiswa','halaman'));
+        //$client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='$mahasiswa->nim)->json();
         
-        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+        //$prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
 
-        return view('mahasiswa.index', compact('ms','prediksi'));
+        return view('mahasiswa.index', compact('mahasiswa','halaman'));
     }
 
     /**
@@ -32,7 +37,7 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        return view('mahasiswa.create');
+        return view('mahasiswa.create', compact('halaman'));
     }
 
     /**
@@ -54,9 +59,15 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Mahasiswa $mahasiswa)
     {
-        //
+        $halaman = 'mahasiswa'; 
+
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
+        
+        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+
+        return view('mahasiswa.show', compact('mahasiswa','prediksi','halaman'));
     }
 
     /**
