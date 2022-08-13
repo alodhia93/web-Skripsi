@@ -23,7 +23,9 @@ Route::get('/about', function () {
     return view('about', compact('halaman'));
 });
 
-Route::get('training', 'TrainingController@index');
+
+Route::get('training/delete', 'TrainingController@delete');
 Route::post('training/import_excel', 'TrainingController@import_excel');
+Route::resource('training', 'TrainingController');
 
 Route::resource('mahasiswa', 'MahasiswaController');

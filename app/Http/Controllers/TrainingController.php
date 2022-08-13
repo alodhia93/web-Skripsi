@@ -5,8 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Training;
 use Session;
+use DB;
+use Illuminate\Support\Facades\Storage; 
 use App\Imports\TrainingImport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Filesystem\Filesystem;
+
 
 class TrainingController extends Controller
 {
@@ -15,11 +19,12 @@ class TrainingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public $halaman = 'training';
+
     public function index()
     {
-        $training = Training::all();
-        return view('training.index', compact('halaman'));
+        $halaman = 'training';
+        $training = Training::paginate(25);
+        return view('training.index', compact('halaman','training'));
     }
 
     /**
@@ -104,6 +109,16 @@ class TrainingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function delete(){
+        
+        echo "halo";
+        Training::where('nim', 'like', '%%')->delete();
+        $file = new Filesystem;
+        $file->cleanDirectory('file_training');
+        return redirect('training');
+    }
+
     public function destroy($id)
     {
         //

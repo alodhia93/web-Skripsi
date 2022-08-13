@@ -52,10 +52,17 @@
 		<div>
 			<h2>Data Training</h2>
 			<button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
-				IMPORT EXCEL
+				Unggah Data
 			</button>
+			<a role="button" class="btn btn-danger mr-5" aria-pressed="true" href="training/delete">
+				Hapus Data
+			</a>
+			<br>
+			<br>
+			<br>
+			@if (isset($training))
 			<table class="table">
-				<thead>
+				<thead class="thead-dark">
 					<tr>
 						<th>NIM</th>
 						<th>IPK</th>
@@ -88,6 +95,13 @@
 					@endforeach
 				</tbody>
 			</table>
+			<div>
+				{{ $training->links() }}
+			</div>	
+			@else
+				<p>Data training tidak ada</p>
+			@endif
+			
 		</div>
 		
  

@@ -65,6 +65,11 @@ return [
             'endpoint' => env('AWS_ENDPOINT'),
         ],
 
+        'file_training' =>[
+            'driver'    => 'local',
+            'root' => storage_path('app/public/file_training'),
+        ]
+
     ],
 
     /*
