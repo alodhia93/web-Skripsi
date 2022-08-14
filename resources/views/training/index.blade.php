@@ -60,9 +60,11 @@
 			<br>
 			<br>
 			<br>
-			@if (isset($training))
+			@if ($cek)
+			<p>Data training tidak ada</p>
+			@else
 			<table class="table">
-				<thead class="thead-dark">
+				<thead>
 					<tr>
 						<th>NIM</th>
 						<th>IPK</th>
@@ -95,12 +97,11 @@
 					@endforeach
 				</tbody>
 			</table>
+				
+			@endif
 			<div>
 				{{ $training->links() }}
-			</div>	
-			@else
-				<p>Data training tidak ada</p>
-			@endif
+			</div>
 			
 		</div>
 		

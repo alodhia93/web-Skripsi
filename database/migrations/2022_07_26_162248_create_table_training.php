@@ -14,7 +14,7 @@ class CreateTableTraining extends Migration
     public function up()
     {
         Schema::create('training', function (Blueprint $table) {
-            $table->string('nim')->unique;
+            $table->string('nim');
             $table->float('ipk');
             $table->integer('diterimaBulanStlhLulus');
             $table->integer('masaStudiBulan');

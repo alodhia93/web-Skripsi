@@ -24,7 +24,14 @@ class TrainingController extends Controller
     {
         $halaman = 'training';
         $training = Training::paginate(25);
-        return view('training.index', compact('halaman','training'));
+
+        if ($training->isEmpty()) {
+            $cek = $training->isEmpty();
+        }else{
+            $cek = false;
+        }
+        
+        return view('training.index', compact('halaman','training', 'cek'));
     }
 
     /**
