@@ -15,17 +15,16 @@ class CreateTableMahasiswa extends Migration
     {
         Schema::create('mahasiswa', function (Blueprint $table) {
             //$table->id()->increment();
-            $table->string('nama');
             $table->string('nim')->unique();
-            $table->float('ipk',8,2);
-            $table->integer('masaStudiBulan');
-            $table->integer('masaStudiTahun');
+            $table->string('nama');
+            $table->string('jenisKelamin');
+            $table->string('ipk');
             $table->string('fakultas');
-            $table->string('kemampuanBIng');
+            $table->string('kemampuanBahasaInggris');
+            $table->string('pengetahuanDiluarBidang');
+            $table->string('keterampilanKomputer');
             $table->string('pengalamanMagang');
-            $table->string('jenisPekerjaanPertama');
-            $table->string('hubStudidgnPekerjaan');
-            $table->boolean('ikutOrganisasi');
+            $table->string('jenisPekerjaan');
             $table->timestamps();
         });
     }

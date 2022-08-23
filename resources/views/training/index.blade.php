@@ -66,33 +66,33 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>NIM</th>
-						<th>IPK</th>
 						<th>Diterima Setelah Lulus</th>
-						<th>Masa Studi (bulan)</th>
-						<th>Masa Studi (tahun)</th>
+						<th>NIM</th>
+						<th>Nama</th>
+						<th>Jenis Kelamin</th>
+						<th>IPK</th>
 						<th>Fakultas</th>
 						<th>Kemampuan Bahasa Inggris</th>
+						<th>Pengetahuan diluar Bidang</th>
+						<th>Keterampilan Komputer</th>
 						<th>Pengalaman Magang</th>
 						<th>Jenis Pekerjaan Pertama</th>
-						<th>Hubungan Studi dengan Pekerjaan</th>
-						<th>Ikut Organisasi</th>
 					</tr>
 				</thead>
 				<tbody>
 					@foreach ($training as $tr)
 						<tr>
-							<td>{{ $tr->nim }}</td>
-							<td>{{ $tr->ipk }}</td>
 							<td>{{ $tr->diterimaBulanStlhLulus }} bulan</td>
-							<td>{{ $tr->masaStudiBulan }}</td>
-							<td>{{ $tr->masaStudiTahun }}</td>
+							<td>{{ $tr->nim }}</td>
+							<td>{{ $tr->nama }}</td>
+							<td>{{ $tr->jenisKelamin }}</td>
+							<td>{{ $tr->ipk }}</td>
 							<td>{{ $tr->fakultas }}</td>
-							<td>{{ $tr->kemampuanBIng }}</td>
+							<td>{{ $tr->kemampuanBahasaInggris }}</td>
+							<td>{{ $tr->pengetahuanDiluarBidang }}</td>
+							<td>{{ $tr->keterampilanKomputer }}</td>
 							<td>{{ $tr->pengalamanMagang }}</td>
-							<td>{{ $tr->jenisPekerjaanPertama }}</td>
-							<td>{{ $tr->hubStudidgnPekerjaan }}</td>
-							<td>{{ $tr->ikutOrganisasi }}</td>
+							<td>{{ $tr->jenisPekerjaan }}</td>
 						</tr>
 					@endforeach
 				</tbody>

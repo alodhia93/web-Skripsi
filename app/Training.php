@@ -10,6 +10,17 @@ class Training extends Model
 
     protected $primaryKey = 'nim';
 
-    protected $fillable = ['nim', 'ipk', 'diterimaBulanStlhLulus', 'masaStudiBulan', 'masaStudiTahun', 'fakultas', 'kemampuanBIng', 'pengalamanMagang', 'jenisPekerjaanPertama', 'hubStudidgnPekerjaan', 'ikutOrganisasi'];
+    protected $fillable = [
+        'diterimaBulanStlhLulus',
+        'nim', 
+        'nama',
+        'jenisKelamin',
+        'ipk',
+        'fakultas', 
+        'kemampuanBahasaInggris', 
+        'pengetahuanDiluarBidang',  
+        'keterampilanKomputer',
+        'pengalamanMagang', 
+        'jenisPekerjaan'];
 
 }
