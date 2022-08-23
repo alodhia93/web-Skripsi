@@ -19,7 +19,7 @@ class TrainingImport implements ToModel
             'nim' => $row[1], 
             'nama' => $row[2],
             'jenisKelamin' => $row[3],
-            'ipk' => $row[4],
+            'ipkPredikat' => $row[4],
             'fakultas' => $row[5], 
             'kemampuanBahasaInggris' => $row[6], 
             'pengetahuanDiluarBidang' => $row[7],  

@@ -86,7 +86,7 @@
 							<td>{{ $tr->nim }}</td>
 							<td>{{ $tr->nama }}</td>
 							<td>{{ $tr->jenisKelamin }}</td>
-							<td>{{ $tr->ipk }}</td>
+							<td>{{ $tr->ipkPredikat }}</td>
 							<td>{{ $tr->fakultas }}</td>
 							<td>{{ $tr->kemampuanBahasaInggris }}</td>
 							<td>{{ $tr->pengetahuanDiluarBidang }}</td>

@@ -21,16 +21,16 @@ class Mahasiswa extends Model
     }
 
     protected $fillable = [
+        'nim', 
         'nama',
-        'nim',
+        'jenisKelamin',
         'ipk',
-        'masaStudiBulan',
-        'masaStudiTahun',
-        'fakultas',
-        'kemampuanBIng',
-        'pengalamanMagang',
-        'jenisPekerjaanPertama',
-        'hubStudidgnPekerjaan',
-        'ikutOrganisasi',
+        'ipkPredikat',
+        'fakultas', 
+        'kemampuanBahasaInggris', 
+        'pengetahuanDiluarBidang',  
+        'keterampilanKomputer',
+        'pengalamanMagang', 
+        'jenisPekerjaan'
     ];
 }

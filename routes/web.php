@@ -28,4 +28,5 @@ Route::get('training/delete', 'TrainingController@delete');
 Route::post('training/import_excel', 'TrainingController@import_excel');
 Route::resource('training', 'TrainingController');
 
+Route::get('mahasiswa/export', 'MahasiswaController@export');
 Route::resource('mahasiswa', 'MahasiswaController');

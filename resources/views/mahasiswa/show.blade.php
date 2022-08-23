@@ -7,54 +7,52 @@
         <p><i>Ini hanyalah prediksi belaka bukan benar benar akan terjadi nanti. Dari hasil ini diharapkan teman-teman bisa mempersiapkan diri untuk mendapatkan pekerjaan nantinya.</i></p>
             <table class="table">
                 <tr>
-                    <td>Nama</td>
-                    <td>{{ $mahasiswa->nama }}</td>
+                    <td>NIM</td>
+                    <td>{{ $mahasiswa->nim}}</td>
                 </tr>
                 <tr>
-                    <td>NIM</td>
-                    <td>{{ $mahasiswa->nim }}</td>
+                    <td>Nama</td>
+                    <td>{{ $mahasiswa->nama  }}</td>
+                </tr>
+                <tr>
+                    <td>Jenis Kelamin</td>
+                    <td>{{ $mahasiswa->jenisKelamin  }}</td>
                 </tr>
                 <tr>
                     <td>IPK</td>
                     <td>{{ $mahasiswa->ipk }}</td>
                 </tr>
                 <tr>
-                    <td>Masa Studi Bulan</td>
-                    <td>{{ $mahasiswa->masaStudiBulan }}</td>
-                </tr>
-                <tr>
-                    <td>Masa Studi Tahun</td>
-                    <td>{{ $mahasiswa->masaStudiTahun }}</td>
+                    <td>Predikat IPK</td>
+                    <td>{{ $mahasiswa->ipkPredikat }}</td>
                 </tr>
                 <tr>
                     <td>Fakultas</td>
                     <td>{{ $mahasiswa->fakultas }}</td>
                 </tr>
                 <tr>
-                    <td>Kemampuan BIng</td>
-                    <td>{{ $mahasiswa->kemampuanBIng }}</td>
+                    <td>Kemampuan Bahasa Inggris</td>
+                    <td>{{ $mahasiswa->kemampuanBahasaInggris }}</td>
                 </tr>
                 <tr>
-                    <td>pengalaman Magang</td>
+                    <td>Pengetahuan Diluar Bidang</td>
+                    <td>{{ $mahasiswa->pengetahuanDiluarBidang }}</td>
+                </tr>
+                
+                <tr>
+                    <td>Keterampilan Komputer</td>
+                    <td>{{ $mahasiswa->keterampilanKomputer }}</td>
+                </tr>
+                <tr>
+                    <td>Pengalaman Magang</td>
                     <td>{{ $mahasiswa->pengalamanMagang }}</td>
                 </tr>
                 <tr>
-                    <td>Jenis Pekerjaan Pertama</td>
-                    <td>{{ $mahasiswa->jenisPekerjaanPertama }}</td>
-                </tr>
-                <tr>
-                    <td>Hubungan Studi</td>
-                    <td>{{ $mahasiswa->hubStudidgnPekerjaan }}</td>
-                </tr>
-                <tr>
-                    <td>Ikut Organisasi</td>
-                    <td>{{ $mahasiswa->ikutOrganisasi }}</td>
-                </tr>
-                <tr>
-                    <td>Perkiraan Mendapatkan Pekerjaan Setelah</td>
-                    <td>{{ $prediksi }} bulan dari wisuda</td>
+                    <td>Jenis Pekerjaan</td>
+                    <td>{{ $mahasiswa->jenisPekerjaan }}</td>
                 </tr>
             </table>
+            <p>Perkiraan {{$mahasiswa->nama}} mendapatkan pekerjaan setelah lulus terbilang {{ $prediksi }} kira-kira {{ $prediksi === "Cepat" ? "1 - 6 bulan" : ($prediksi === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</p>
         </div>
         
     </div>

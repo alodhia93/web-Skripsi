@@ -15,7 +15,7 @@ class Training extends Model
         'nim', 
         'nama',
         'jenisKelamin',
-        'ipk',
+        'ipkPredikat',
         'fakultas', 
         'kemampuanBahasaInggris', 
         'pengetahuanDiluarBidang',  

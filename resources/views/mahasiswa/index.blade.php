@@ -3,6 +3,7 @@
 @section('main')
 		<div>
 			<h2>Data Mahasiswa</h2>
+			<a href="{{ url('mahasiswa/export') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
 			<table class="table">
 				<thead>
 					<tr>

@@ -18,7 +18,7 @@ class CreateTableTraining extends Migration
             $table->string('nim');
             $table->string('nama');
             $table->string('jenisKelamin');
-            $table->string('ipk');
+            $table->string('ipkPredikat');
             $table->string('fakultas');
             $table->string('kemampuanBahasaInggris');
             $table->string('pengetahuanDiluarBidang');

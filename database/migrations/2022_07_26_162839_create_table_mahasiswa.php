@@ -18,7 +18,8 @@ class CreateTableMahasiswa extends Migration
             $table->string('nim')->unique();
             $table->string('nama');
             $table->string('jenisKelamin');
-            $table->string('ipk');
+            $table->float('ipk',8,2);
+            $table->string('ipkPredikat');
             $table->string('fakultas');
             $table->string('kemampuanBahasaInggris');
             $table->string('pengetahuanDiluarBidang');

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+use App\Exports\MahasiswaExport;
+use Maatwebsite\Excel\Facades\Excel;
+
 use App\Mahasiswa;
 
 class MahasiswaController extends Controller
@@ -37,6 +40,11 @@ class MahasiswaController extends Controller
         return view('mahasiswa.index', compact(['mahasiswa','halaman','prediksi']));
     }
 
+    public function export() 
+    {
+        return Excel::download(new MahasiswaExport, 'prediksiMasaTungguKerja.xlsx');
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -56,6 +64,15 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->ipk <= 2.75) {
+            $request->merge(['ipkPredikat' => 'Memuaskan']);
+        } elseif ($request->ipk <= 3.5) {
+            $request->merge(['ipkPredikat' => 'Sangat Memuaskan']);
+        } else {
+            $request->merge(['ipkPredikat' => 'Pujian']);
+            //$request->ipkPredikat = "Pujian";
+        }
+        
         Mahasiswa::Create($request->all());
 
         return redirect('mahasiswa');

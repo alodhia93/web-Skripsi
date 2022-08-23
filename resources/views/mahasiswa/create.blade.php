@@ -14,20 +14,22 @@
             {!! Form::label('nim', 'NIM', ['class' => 'control-label']) !!}
             {!! Form::text('nim', null, ['class' => 'form-control']) !!}
         </div>
+
+        <div class="form-group">
+            {!! Form::label('jenisKelamin', 'Jenis Kelamin', ['class' => 'control-label']) !!}
+            <div class="radio">
+                <label>{!! Form::radio('jenisKelamin', 'Laki laki') !!}Laki laki</label>
+            </div>
+            <div class="radio">
+                <label>{!! Form::radio('jenisKelamin', 'Perempuan') !!}Perempuan</label>
+            </div>
+        </div>
         
         <div class="form-group">
             {!! Form::label('ipk', 'ipk', ['class' => 'control-label']) !!}
             {!! Form::text('ipk', null, ['class' => 'form-control']) !!}
-        </div>
 
-        <div class="form-group">
-            {!! Form::label('masaStudiBulan', 'Masa Studi Bulan', ['class' => 'control-label']) !!}
-            {!! Form::selectRange('masaStudiBulan', 1, 11, null, ['class' => 'form-control']) !!}
-        </div>
-
-        <div class="form-group">
-            {!! Form::label('masaStudiTahun', 'Masa Studi Tahun', ['class' => 'control-label']) !!}
-            {!! Form::selectRange('masaStudiTahun', 3, 5, null, ['class' => 'form-control']) !!}
+            {!! Form::hidden('ipkPredikat', "2",) !!}
         </div>
 
         <div class="form-group">
@@ -47,40 +49,58 @@
         </div>
 
         <div class="form-group">
-            {!! Form::label('kemampuanBIng', 'Kemampuan BIng', ['class' => 'control-label']) !!}
-            {!! Form::selectRange('kemampuanBIng', 1, 5, null, ['class' => 'form-control']) !!}
-        </div>
-
-        <div class="form-group">
-            {!! Form::label('pengalamanMagang', 'Pengalaman Magang', ['class' => 'control-label']) !!}
-            {!! Form::selectRange('pengalamanMagang', 1, 5, null, ['class' => 'form-control']) !!}
-        </div>
-
-        <div class="form-group">
-            {!! Form::label('jenisPekerjaanPertama', 'Jenis Pekerjaan Pertama', ['class' => 'control-label']) !!}
-            {!! Form::select('jenisPekerjaanPertama',[
-                'BUMN' => 'BUMN',
-                'BUMD' => 'BUMD',
-                'Instansi Pemerintah' => 'Instansi Pemerintah',
-                'Organisasi non-profit' => 'Organisasi non-profit',
-                'Swasta' => 'Swasta',
-                'Wiraswasta' => 'Wiraswasta',
+            {!! Form::label('kemampuanBahasaInggris', 'Kemampuan BahasaI nggris', ['class' => 'control-label']) !!}
+            {!! Form::select('kemampuanBahasaInggris',[
+                'Sangat besar' => 'Sangat besar',
+                'Besar' => 'Besar',
+                'Cukup besar' => 'Cukup besar',
+                'Kurang' => 'Kurang',
+                'Tidak sama sekali' => 'Tidak sama sekali',
         ], null, ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::label('hubStudidgnPekerjaan', 'Hubungan Studi dgn Pekerjaan', ['class' => 'control-label']) !!}
-            {!! Form::selectRange('hubStudidgnPekerjaan', 1, 5, null, ['class' => 'form-control']) !!}
+            {!! Form::label('pengetahuanDiluarBidang', 'Pengetahuan Diluar Bidang', ['class' => 'control-label']) !!}
+            {!! Form::select('pengetahuanDiluarBidang',[
+                'Sangat besar' => 'Sangat besar',
+                'Besar' => 'Besar',
+                'Cukup besar' => 'Cukup besar',
+                'Kurang' => 'Kurang',
+                'Tidak sama sekali' => 'Tidak sama sekali',
+        ], null, ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::label('ikutOrganisasi', 'Ikut Organisasi', ['class' => 'control-label']) !!}
-            <div class="radio">
-                <label>{!! Form::radio('ikutOrganisasi', 1) !!}Pernah</label>
-            </div>
-            <div class="radio">
-                <label>{!! Form::radio('ikutOrganisasi', 0) !!}Tidak Pernah</label>
-            </div>
+            {!! Form::label('keterampilanKomputer', 'Keterampilan Komputer', ['class' => 'control-label']) !!}
+            {!! Form::select('keterampilanKomputer',[
+                'Sangat besar' => 'Sangat besar',
+                'Besar' => 'Besar',
+                'Cukup besar' => 'Cukup besar',
+                'Kurang' => 'Kurang',
+                'Tidak sama sekali' => 'Tidak sama sekali',
+        ], null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('pengalamanMagang', 'Pengalaman Magang', ['class' => 'control-label']) !!}
+            {!! Form::select('pengalamanMagang',[
+                'Sangat besar' => 'Sangat besar',
+                'Besar' => 'Besar',
+                'Cukup besar' => 'Cukup besar',
+                'Kurang' => 'Kurang',
+                'Tidak sama sekali' => 'Tidak sama sekali',
+        ], null, ['class' => 'form-control']) !!}
+        </div>
+
+        <div class="form-group">
+            {!! Form::label('jenisPekerjaan', 'Jenis Pekerjaan', ['class' => 'control-label']) !!}
+            {!! Form::select('jenisPekerjaan',[
+                'Instansi Pemerintah' => 'Instansi Pemerintah',
+                'Organisasi non-profit/Lembaga Swadaya Masyarakat' => 'Organisasi non-profit/Lembaga Swadaya Masyarakat',
+                'Perusahaan swasta' => 'Perusahaan swasta',
+                'Wiraswasta/perusahaan sendiri' => 'Wiraswasta/perusahaan sendiri',
+                'Lainnya' => 'Lainnya',
+        ], null, ['class' => 'form-control']) !!}
         </div>
 
         <div class="form-group">
