@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Http;
 
 use App\Exports\MahasiswaExport;
 use Maatwebsite\Excel\Facades\Excel;
-
+use Validator;
 use App\Mahasiswa;
 
 class MahasiswaController extends Controller
@@ -64,6 +64,7 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+        $halaman = 'mahasiswa';
         if ($request->ipk <= 2.75) {
             $request->merge(['ipkPredikat' => 'Memuaskan']);
         } elseif ($request->ipk <= 3.5) {
@@ -71,6 +72,21 @@ class MahasiswaController extends Controller
         } else {
             $request->merge(['ipkPredikat' => 'Pujian']);
             //$request->ipkPredikat = "Pujian";
+        }
+
+        $validator = Validator::make($request->all(),[
+            'ipk'   =>  'required|numeric|between:1,4.00',
+            'kemampuanBahasaInggris'    =>  'required',
+            'pengetahuanDiluarBidang'   =>  'required',
+            'keterampilanKomputer'      =>  'required',
+            'pengalamanMagang'          =>  'required',
+            'jenisPekerjaan'            =>  'required',
+        ]);
+
+        if($validator->fails()){
+            return redirect('mahasiswa/create')
+                ->withInput()
+                ->withErrors($validator);
         }
         
         Mahasiswa::Create($request->all());
@@ -101,11 +117,12 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($mahasiswa)
     {
-        //
+        $halaman = 'mahasiswa'; 
+        return view('mahasiswa.edit', compact('mahasiswa','halaman'));
     }
-
+        
     /**
      * Update the specified resource in storage.
      *
@@ -113,7 +130,7 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Mahasiswa $mahasiswa, $request)
     {
         //
     }

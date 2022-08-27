@@ -6,7 +6,53 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="{{ asset('bootstrap_4_6_1/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('bootstrap_4_6_1/css/bootstrap.css') }}">
+    <style>
 
+		.has-error .help-block,
+		.has-error .control-label,
+		.has-error .radio,
+		.has-error .checkbox,
+		.has-error .radio-inline,
+		.has-error .checkbox-inline,
+		.has-error.radio label,
+		.has-error.checkbox label,
+		.has-error.radio-inline label,
+		.has-error.checkbox-inline label {
+		color: #a94442;
+		}
+
+      .has-error .form-control {
+        border-color: #a94442;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
+
+	  	.has-success .help-block,		
+		.has-success .control-label,
+		.has-success .radio,
+		.has-success .checkbox,
+		.has-success .radio-inline,
+		.has-success .checkbox-inline,
+		.has-success.radio label,
+		.has-success.checkbox label,
+		.has-success.radio-inline label,
+		.has-success.checkbox-inline label {
+		color: #3c763d;
+		}
+
+      .has-success .form-control {
+        border-color: #3c763d;
+        -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
+
+      .help-block {
+        display: block;
+        margin-top: 5px;
+        margin-bottom: 10px;
+        color: #737373;
+      }
+    </style>
     <title>Prediksi Masa Depan</title>
   </head>
   <body>

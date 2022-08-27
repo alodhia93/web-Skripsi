@@ -20,6 +20,16 @@ class Mahasiswa extends Model
         return 'nim';
     }
 
+    public function getNamaAttribute($nama)
+    {
+        return ucwords($nama);
+    }
+
+    public function setNamaAttribute($nama)
+    {
+        $this->attributes['nama'] = strtolower($nama);
+    }
+
     protected $fillable = [
         'nim', 
         'nama',
@@ -33,4 +43,9 @@ class Mahasiswa extends Model
         'pengalamanMagang', 
         'jenisPekerjaan'
     ];
+
+    public function setIpkAttribute($ipk)
+    {
+        $this->attributes['ipk'] = str_replace(',', '.', $ipk);;
+    }
 }
