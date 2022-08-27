@@ -30,3 +30,10 @@ Route::resource('training', 'TrainingController');
 
 Route::get('mahasiswa/export', 'MahasiswaController@export');
 Route::resource('mahasiswa', 'MahasiswaController');
+Auth::routes();
+
+Route::get('/', function () {
+    $halaman = '/';
+    return view('index', compact('halaman'));
+});
+

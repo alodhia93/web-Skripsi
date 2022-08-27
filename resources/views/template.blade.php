@@ -110,10 +110,23 @@
                 @endif
               
             </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
+            <ul class="nav justify-content-end">
+				@if (Auth::check())
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ Auth::user()->name }}<span class="sr-only"></span></a>
+						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
+						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+							@csrf
+						</form>
+						</div>
+				  	</li>
+				@else
+					<li class="nav-item">
+						<a class="nav-link" href="{{ route('login') }}">{{ __('login') }}</a>
+					</li>
+				@endif
+            </ul>
             </div>
         </div>
       </nav>
