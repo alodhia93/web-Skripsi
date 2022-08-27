@@ -113,7 +113,7 @@
             <ul class="nav justify-content-end">
 				@if (Auth::check())
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ Auth::user()->name }}<span class="sr-only"></span></a>
+						<a class="nav-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" href="#" role="button" aria-expanded="false">{{ Auth::user()->nama }}<span class="sr-only"></span></a>
 						<div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 						<a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">{{ __('Logout') }}</a>
 						<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
