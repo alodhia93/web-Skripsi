@@ -52,6 +52,16 @@
         margin-bottom: 10px;
         color: #737373;
       }
+      
+		.zoom {
+			transition: transform .2s; /* Animation */
+			width: auto;
+			height: 350px;
+		}
+
+		.zoom:hover {
+			transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+		}
     </style>
     <title>Prediksi Masa Depan</title>
   </head>
@@ -95,6 +105,17 @@
                 @else
                 <li class="nav-item">
                   <a class="nav-link" href="{{ url('mahasiswa') }}">Data Mahasiswa</a>
+                  </li>
+                @endif
+
+                @if (!empty($halaman) && $halaman == 'akun')
+                  <li class="nav-item active">
+                  <a class="nav-link" href="{{ url('akun') }}"><b>Akun Mahasiswa</b><span class="sr-only">(current)</span></a>
+                  </li> 
+                    
+                @else
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ url('akun') }}">Akun Mahasiswa</a>
                   </li>
                 @endif
 

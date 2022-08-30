@@ -32,7 +32,7 @@
 							<td>{{ $id->pengalamanMagang }}</td>
 							<td>{{ $id->jenisPekerjaan }}</td>
 							<td>{{ $prediksi[$ms] }}</td>
-							<td>{{ $prediksi[$ms] === "Cepat" ? "1 - 6 bulan" : ($prediksi[$ms] === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</td>
+							<td>{{ $prediksi[$ms] === "Cepat" ? "1 - 6 bulan" : ($prediksi[$ms] === "Sedang" ? "7 - 12 bulan" : "Lebih dari 1 tahun" )}}</td>
 						</tr>
 					@endforeach
 					

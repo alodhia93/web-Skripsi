@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 use Validator;
 use App\Http\Requests\AkunRequest;
 
-class AkunController extends Controller
+class VerifikasiController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,10 +18,10 @@ class AkunController extends Controller
      */
     public function index()
     {
-        $akun = User::paginate(25)->where('verifikasi', '1');
+        $akun = User::paginate(25)->where('verifikasi', '0');
         $halaman = 'akun';
 
-        return view('akun.index', compact('halaman','akun'));
+        return view('verifikasi.index', compact('halaman','akun'));
     }
 
     /**
@@ -31,7 +31,7 @@ class AkunController extends Controller
      */
     public function create()
     {
-        return view('akun.create');
+        //
     }
 
     /**
@@ -40,24 +40,9 @@ class AkunController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AkunRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->all();
-
-        if ($request->hasFile('kpm')) {
-            $kpm = $request->file('kpm');
-            $ext = $kpm->getClientOriginalExtension();
-            if ($request->file('kpm')->isValid()) {
-                $kpmNama = date('YmdHis'). ".$ext";
-                $path = 'kpmUpload';
-                $request->file('kpm')->move($path, $kpmNama);
-                $data['kpm'] = $kpmNama;
-            }
-        }
-        $data['password'] = bcrypt($data['password']);
-        User::Create($data);
-
-        return redirect('akun');
+        //
     }
 
     /**
@@ -68,9 +53,10 @@ class AkunController extends Controller
      */
     public function show($id)
     {
+        
         $halaman = 'akun';
         $akun = User::findOrFail($id);
-        return view('akun.show', compact('halaman','akun'));
+        return view('verifikasi.show', compact('halaman','akun'));
     }
 
     /**
@@ -81,7 +67,6 @@ class AkunController extends Controller
      */
     public function edit($id)
     {
-        //
     }
 
     /**
@@ -93,7 +78,9 @@ class AkunController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $akun = User::findOrFail($id);
+        $akun->update($request->all());
+        return redirect('verifikasi');
     }
 
     /**

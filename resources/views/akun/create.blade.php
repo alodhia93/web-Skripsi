@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-header">Pendaftaran Akun</div>
                 <div class="card-body"> 
-                    {!! Form::open(['url' => 'akun']) !!}
+                    {!! Form::open(['url' => 'akun', 'files' => 'true']) !!}
                     
                     @if ($errors->any())
                         <div class="form-group {{ $errors->has('email') ? 'has-error' : 'has-success'}}">
@@ -91,7 +91,7 @@
                         <div class="form-group">
                     @endif
                         {!! Form::label('password', 'Password', ['class' => 'control-label']) !!}
-                        {!! Form::password('password', ['class' => 'form-control']) !!}
+                        {!! Form::password('password',['class' => 'form-control']) !!}
                         @if ($errors->has('password'))
                             <span class="help-block">{{ $errors->first('password') }}</span>
                         @endif
@@ -103,7 +103,7 @@
                         <div class="form-group">
                     @endif
                         {!! Form::label('password_confirmation', 'Konfirmasi Password', ['class' => 'control-label']) !!}
-                        {!! Form::password('password_confirmation', ['class' => 'form-control']) !!}
+                        {!! Form::password('password_confirmation',['class' => 'form-control']) !!}
                         @if ($errors->has('password_confirmation'))
                             <span class="help-block">{{ $errors->first('password_confirmation') }}</span>
                         @endif
@@ -115,7 +115,7 @@
                         <div class="form-group">
                     @endif
                         {!! Form::label('kpm', 'Foto KPM', ['class' => 'control-label']) !!}
-                        {!! Form::file('kpm', ['class' => 'form-control-file']) !!}
+                        {!! Form::file('kpm', ['class' => 'form-control']) !!}
                         @if ($errors->has('kpm'))
                             <span class="help-block">{{ $errors->first('kpm') }}</span>
                         @endif

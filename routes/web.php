@@ -33,6 +33,10 @@ Route::resource('training', 'TrainingController');
 Route::get('mahasiswa/export', 'MahasiswaController@export');
 Route::resource('mahasiswa', 'MahasiswaController');
 
+Route::resource('prediksi', 'PrediksiController');
+
+Route::resource('verifikasi', 'VerifikasiController');
+
 Route::resource('akun', 'AkunController');
 
 

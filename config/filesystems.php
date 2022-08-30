@@ -68,8 +68,12 @@ return [
         'file_training' =>[
             'driver'    => 'local',
             'root' => storage_path('app/public/file_training'),
-        ]
+        ],
 
+        'kpm' =>[
+            'driver'    => 'local',
+            'root'      => public_path('kpmUpload'),
+        ],
     ],
 
     /*

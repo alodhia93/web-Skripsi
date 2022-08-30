@@ -3,46 +3,33 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-
-use App\Exports\MahasiswaExport;
-use Maatwebsite\Excel\Facades\Excel;
+use Session;
 use Validator;
 use App\Mahasiswa;
+use App\User;
 
-class MahasiswaController extends Controller
+class PrediksiController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-
-    //public $halaman = 'mahasiswa';
-
     public function index()
     {
-        $mahasiswa = Mahasiswa::paginate(25);
+        $halaman = 'prediksi'; 
 
-        $halaman = 'mahasiswa';
-        //return view('mahasiswa.index', compact('mahasiswa','halaman'));
-
-        $prediksi = array();
-
-        foreach($mahasiswa as $ms){
-            $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $ms->nim)->json();
-            $prediksi[] = $client[0]['prediction(diterimaBulanStlhLulus)'];
-        }
-        //$client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrainList?')->json();
+        $mahasiswa = Mahasiswa::firstWhere('nim',Session::get('nim'));
         
-        //$prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
-        //echo $prediksi;
-        return view('mahasiswa.index', compact(['mahasiswa','halaman','prediksi']));
-    }
+        if (!$mahasiswa) {
+            create();
+        }
 
-    public function export() 
-    {
-        return Excel::download(new MahasiswaExport, 'prediksiMasaTungguKerja.xlsx');
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
+        
+        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+
+        return view('prediksi.index', compact('mahasiswa','prediksi','halaman'));
     }
 
     /**
@@ -52,8 +39,11 @@ class MahasiswaController extends Controller
      */
     public function create()
     {
-        $halaman = 'mahasiswa';
-        return view('mahasiswa.create', compact('halaman'));
+        $halaman = 'prediksi';
+
+        $mahasiswa = User::firstWhere('nim',Session::get('nim'));
+
+        return view('prediksi.create', compact('halaman','mahasiswa'));
     }
 
     /**
@@ -91,7 +81,7 @@ class MahasiswaController extends Controller
         
         Mahasiswa::Create($request->all());
 
-        return redirect('mahasiswa');
+        return redirect('prediksi');
     }
 
     /**
@@ -100,15 +90,9 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Mahasiswa $mahasiswa)
+    public function show($id)
     {
-        $halaman = 'mahasiswa'; 
-
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
-        
-        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
-
-        return view('mahasiswa.show', compact('mahasiswa','prediksi','halaman'));
+        //
     }
 
     /**
@@ -117,13 +101,15 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($mahasiswa)
+    public function edit($id)
     {
         $halaman = 'mahasiswa'; 
+
+        $mahasiswa = Mahasiswa::firstWhere('nim',Session::get('nim'));
         
-        return view('mahasiswa.edit', compact('mahasiswa','halaman'));
+        return view('mahasiswa.edit', compact('mahasiswa','halaman','id'));
     }
-        
+
     /**
      * Update the specified resource in storage.
      *
@@ -167,9 +153,8 @@ class MahasiswaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mahasiswa $mahasiswa)
+    public function destroy($id)
     {
-        $mahasiswa->delete();
-        return redirect('mahasiswa');
+        //
     }
 }
