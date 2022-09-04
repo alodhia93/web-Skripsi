@@ -4,6 +4,7 @@
 		<div>
 			<h2>Akun Mahasiswa</h2>
 			<a href="{{ url('verifikasi') }}" class="btn btn-success my-3">Verifikasi Akun</a>
+			@include('akun.form_pencarian')
 			<table class="table">
 				<thead>
 					<tr>
@@ -26,11 +27,6 @@
 							<td>
 								<div style="display: inline-block">
 									{{ link_to('akun/'.$ak->id, 'Detail', ['class'=>'btn btn-success btn-sm']) }}
-								</div>
-								<div style="display: inline-block">
-									{!! Form::open(['method' => 'DELETE', 'action' => ['AkunController@destroy', $ak->id]]) !!}
-									{!! Form::submit('Hapus', ['class' => 'btn btn-danger btn-sm']) !!}
-									{!! Form::close() !!}
 								</div>
 							</td>
 						</tr>

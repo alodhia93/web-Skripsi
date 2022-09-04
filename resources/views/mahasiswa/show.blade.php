@@ -52,7 +52,7 @@
                     <td>{{ $mahasiswa->jenisPekerjaan }}</td>
                 </tr>
             </table>
-            <p>Perkiraan {{$mahasiswa->nama}} mendapatkan pekerjaan setelah lulus terbilang {{ $prediksi }} kira-kira {{ $prediksi === "Cepat" ? "1 - 6 bulan" : ($prediksi === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</p>
+            <p>Perkiraan {{$mahasiswa->nama}} mendapatkan pekerjaan setelah lulus terbilang {{ $mahasiswa->prediksi }} kira-kira {{ $mahasiswa->prediksi === "Cepat" ? "1 - 6 bulan" : ($mahasiswa->prediksi === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</p>
         </div>
         
     </div>

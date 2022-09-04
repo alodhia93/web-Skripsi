@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
+use App\User;
+use Auth;
 use App\Exports\MahasiswaExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Validator;
@@ -18,7 +20,11 @@ class MahasiswaController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    //public $halaman = 'mahasiswa';
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
 
     public function index()
     {
@@ -44,7 +50,60 @@ class MahasiswaController extends Controller
     {
         return Excel::download(new MahasiswaExport, 'prediksiMasaTungguKerja.xlsx');
     }
+    public function cari(Request $request)
+    {
+        $halaman = 'mahasiswa';
+        $search = trim($request->input('search'));
+        $prediksi = trim($request->input('prediksi'));
+        $fakultas = trim($request->input('fakultas'));
+        $namaAtauNim = trim($request->input('namaAtauNim'));
+        if (! empty($search)) {
+            $this->validate($request, [
+                'namaAtauNim' => 'required'
+            ]);
 
+            $query = Mahasiswa::where($namaAtauNim, 'LIKE', '%' . $search . '%');
+            (! empty($prediksi)) ? $query->where('prediksi', $prediksi ) : '';
+            (! empty($fakultas)) ? $query->where('fakultas', $fakultas ) : '';
+            $mahasiswa = $query->paginate(25);
+            $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
+            $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
+            $paging = (! empty($namaAtauNim)) ? $mahasiswa->appends(['namaAtauNim' => $namaAtauNim]) : '';
+            $paging = (! empty($search)) ? $mahasiswa->appends(['search' => $search]) : '';
+            $cek = false;
+            $page = true;
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+        }
+        if (! empty($prediksi) && ! empty($fakultas)) {
+            $query = Mahasiswa::where([
+                ['prediksi', $prediksi],
+                ['fakultas', $fakultas]
+            ] );
+            $mahasiswa = $query->paginate(25);
+            $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
+            $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
+            $cek = false;
+            $page = true;
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+        }
+        if (! empty($prediksi)) {
+            $query = Mahasiswa::where('prediksi', $prediksi);
+            $mahasiswa = $query->paginate(25);
+            $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
+            $cek = false;
+            $page = true;
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+        }
+        if (! empty($fakultas)) {
+            $query = Mahasiswa::where('fakultas', $fakultas);
+            $mahasiswa = $query->paginate(25);
+            $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
+            $cek = false;
+            $page = true;
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+        }
+        return redirect('mahasiswa');
+       }
     /**
      * Show the form for creating a new resource.
      *

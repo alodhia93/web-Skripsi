@@ -85,39 +85,58 @@
                   <a class="nav-link" href="{{ url('/') }}">Beranda</a>
                   </li>
                 @endif
-
-                @if (!empty($halaman) && $halaman == 'training')
-                  <li class="nav-item active">
-                  <a class="nav-link" href="{{ url('training') }}"><b>Data Training</b><span class="sr-only">(current)</span></a>
-                  </li> 
-                    
-                @else
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('training') }}">Data Training</a>
-                  </li>
+                
+                @if (Auth::check() && Auth::user()->level == 'mahasiswa')
+                  @if (!empty($halaman) && $halaman == 'prediksi')
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('prediksi') }}"><b>Prediksi</b><span class="sr-only">(current)</span></a>
+                    </li>
+                  @else
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('prediksi') }}">Prediksi</a>
+                    </li>
+                  @endif
                 @endif
 
-                @if (!empty($halaman) && $halaman == 'mahasiswa')
-                  <li class="nav-item active">
-                  <a class="nav-link" href="{{ url('mahasiswa') }}"><b>Data Mahasiswa</b><span class="sr-only">(current)</span></a>
-                  </li> 
-                    
-                @else
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('mahasiswa') }}">Data Mahasiswa</a>
-                  </li>
+                @if (Auth::check() && Auth::user()->level == 'admin')
+                  @if (!empty($halaman) && $halaman == 'training')
+                    <li class="nav-item active">
+                    <a class="nav-link" href="{{ url('training') }}"><b>Data Training</b><span class="sr-only">(current)</span></a>
+                    </li> 
+                      
+                  @else
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ url('training') }}">Data Training</a>
+                    </li>
+                  @endif
                 @endif
-
-                @if (!empty($halaman) && $halaman == 'akun')
-                  <li class="nav-item active">
-                  <a class="nav-link" href="{{ url('akun') }}"><b>Akun Mahasiswa</b><span class="sr-only">(current)</span></a>
-                  </li> 
-                    
-                @else
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('akun') }}">Akun Mahasiswa</a>
-                  </li>
-                @endif
+                
+                @if (Auth::check() && Auth::user()->level == 'admin')
+					@if (!empty($halaman) && $halaman == 'mahasiswa')
+					<li class="nav-item active">
+					<a class="nav-link" href="{{ url('mahasiswa') }}"><b>Data Mahasiswa</b><span class="sr-only">(current)</span></a>
+					</li> 
+						
+					@else
+					<li class="nav-item">
+					<a class="nav-link" href="{{ url('mahasiswa') }}">Data Mahasiswa</a>
+					</li>
+					@endif		
+				@endif
+                
+				@if (Auth::check() && Auth::user()->level == 'admin')
+					@if (!empty($halaman) && $halaman == 'akun')
+					<li class="nav-item active">
+					<a class="nav-link" href="{{ url('akun') }}"><b>Akun Mahasiswa</b><span class="sr-only">(current)</span></a>
+					</li> 
+						
+					@else
+					<li class="nav-item">
+					<a class="nav-link" href="{{ url('akun') }}">Akun Mahasiswa</a>
+					</li>
+					@endif	
+				@endif
+                
 
                 @if (!empty($halaman) && $halaman == 'about')
                   <li class="nav-item active">
@@ -144,7 +163,7 @@
 				  	</li>
 				@else
 					<li class="nav-item">
-						<a class="nav-link" href="{{ route('login') }}">{{ __('login') }}</a>
+						<a class="nav-link" href="{{ route('login') }}">Masuk</a> 
 					</li>
 				@endif
             </ul>

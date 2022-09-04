@@ -27,17 +27,20 @@ Route::get('/about', function () {
 Auth::routes(['register' => 'false']);
 
 Route::get('training/delete', 'TrainingController@delete');
+Route::get('training/cari', 'TrainingController@cari');
 Route::post('training/import_excel', 'TrainingController@import_excel');
 Route::resource('training', 'TrainingController');
 
 Route::get('mahasiswa/export', 'MahasiswaController@export');
+Route::get('mahasiswa/cari', 'MahasiswaController@cari');
 Route::resource('mahasiswa', 'MahasiswaController');
 
 Route::resource('prediksi', 'PrediksiController');
 
+Route::get('verifikasi/cari', 'VerifikasiController@cari');
 Route::resource('verifikasi', 'VerifikasiController');
 
+Route::get('akun/cari', 'AkunController@cari');
 Route::resource('akun', 'AkunController');
 
-
-
+Route::resource('regis','RegisController');

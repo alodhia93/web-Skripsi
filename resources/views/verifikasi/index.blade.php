@@ -2,6 +2,7 @@
 
 @section('main')
 		<div>
+			@include('__partial')
 			<h2>Verifikasi Akun Mahasiswa</h2>
 			<table class="table">
 				<thead>

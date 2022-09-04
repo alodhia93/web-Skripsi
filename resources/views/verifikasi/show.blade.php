@@ -1,6 +1,26 @@
 @extends('template')
 
 @section('main')
+<div class="modal fade" id="hapusAkun" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        {!! Form::open(['method' => 'DELETE', 'action' => ['VerifikasiController@destroy', $akun->id]]) !!}
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Hapus Akun</h5>
+                </div>
+                <div class="modal-body">
+
+                    <label>Akun ini akan dihapus, apakah anda yakin untuk menghapus akun ini?</label>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                    {!! Form::submit('Hapus', ['class' => 'btn btn-danger']) !!}
+                </div>
+            </div>
+        {!! Form::close() !!}	
+    </div>
+</div>
 <div class="row">
     <div class="col-md-6">
         <h2>Akun Mahasiswa</h2>
@@ -10,13 +30,13 @@
                         <div style="display: inline-block">
                             {!! Form::model($akun, ['method' => 'PATCH', 'action' => ['VerifikasiController@update', $akun->id]]) !!}
                             {!! Form::hidden('verifikasi', '1', ) !!}
-                            {!! Form::submit('Verifikasi', ['class' => 'btn btn-success btn-sm']) !!}
+                            {!! Form::submit('Verifikasi', ['class' => 'btn btn-success mr-5']) !!}
                             {!! Form::close() !!}
                         </div>
                         <div style="display: inline-block">
-                            {!! Form::open(['method' => 'DELETE', 'action' => ['VerifikasiController@destroy', $akun->id]]) !!}
-                            {!! Form::submit('Tolak', ['class' => 'btn btn-danger btn-sm']) !!}
-                            {!! Form::close() !!}
+                            <button type="button" class="btn btn-danger mr-5" data-toggle="modal" data-target="#hapusAkun">
+                                Hapus Akun
+                            </button>
                         </div>
                     </td>
                 </tr>

@@ -4,6 +4,7 @@
 		<div>
 			<h2>Data Mahasiswa</h2>
 			<a href="{{ url('mahasiswa/export') }}" class="btn btn-success my-3" target="_blank">EXPORT EXCEL</a>
+			@include('mahasiswa.form_pencarian')
 			<table class="table">
 				<thead>
 					<tr>
@@ -21,7 +22,7 @@
 							<td>{{ $id->nim }}</td>
 							<td>{{ $id->nama }}</td>
                             <td>{{ $id->ipk }}</td>
-							<td>{{ $prediksi[$ms] }} bulan</td>
+							<td>{{ $id->prediksi}} bulan</td>
 							<td>{{ $id->fakultas }}</td>
 							<td>
 								<div style="display: inline-block">

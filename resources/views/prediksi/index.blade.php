@@ -3,6 +3,7 @@
 @section('main')
 <div class="row">
     <div class="col-md-6">
+		@include('__partial')
         <h2>Data Mahasiswa</h2>
         <p><i>Ini hanyalah prediksi belaka bukan benar benar akan terjadi nanti. Dari hasil ini diharapkan teman-teman bisa mempersiapkan diri untuk mendapatkan pekerjaan nantinya.</i></p>
             <table class="table">
@@ -52,10 +53,8 @@
                     <td>{{ $mahasiswa->jenisPekerjaan }}</td>
                 </tr>
             </table>
-            <p>Perkiraan {{$mahasiswa->nama}} mendapatkan pekerjaan setelah lulus terbilang {{ $prediksi }} kira-kira {{ $prediksi === "Cepat" ? "1 - 6 bulan" : ($prediksi === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</p>
-        </div>
-        <div style="display: inline-block">
-            {{ link_to('prediksi/'.$mahasiswa->nim.'/edit', 'Edit', ['class'=>'btn btn-warning btn-sm']) }}
+            <p>Perkiraan {{$mahasiswa->nama}} mendapatkan pekerjaan setelah lulus terbilang {{ $mahasiswa->prediksi }} kira-kira {{ $mahasiswa->prediksi === "Cepat" ? "1 - 6 bulan" : ($prediksi === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</p>
+            {{ link_to('prediksi/'.$mahasiswa->nim.'/edit', 'Sunting', ['class'=>'btn btn-warning btn-sm']) }}
         </div>
     </div>
 @endsection

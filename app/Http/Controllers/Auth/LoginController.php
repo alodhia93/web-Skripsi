@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use App\User;
 
 class LoginController extends Controller
 {
@@ -38,6 +41,18 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
     
+    protected function validateLogin(Request $request)
+{
+    
+    $user = User::where($this->username(), '=', $request->input($this->username()))->first();
+    if ($user && ! $user->verifikasi) {
+        throw ValidationException::withMessages([$this->username() => __('Akun ini belum diverifikasi admin')]);
+    }
+    $request->validate([
+        $this->username() => 'required|string',
+        'password' => 'required|string',
+    ]);
+}
     public function username()
 {
     return 'nim';

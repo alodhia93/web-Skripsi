@@ -26,6 +26,7 @@ class CreateTableMahasiswa extends Migration
             $table->string('keterampilanKomputer');
             $table->string('pengalamanMagang');
             $table->string('jenisPekerjaan');
+            $table->string('prediksi')->nullable();
             $table->timestamps();
         });
     }

@@ -123,10 +123,14 @@
 
                     {!! Form::hidden('level', 'admin',['class' => 'form-control-file']) !!}
                     {!! Form::hidden('verifikasi', '0',['class' => 'form-control-file']) !!}
-
+                    <div class="form-group">
+                        <label class = 'control-label'>Permintaan akan diproses 1x24 jam, hasil validasi akun akan dikirim melalui email</label>
+                    </div>
                     <div class="form-group">
                         {!! Form::submit('Daftar', ['class' => 'btn btn-primary form-control']) !!}
                     </div>
+
+                    
                     {!! Form::close() !!}
     </div>
 </div>

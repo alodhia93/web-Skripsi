@@ -4,7 +4,7 @@
     <div class="row justify-content-center align-middle h-100">
         <div class="col-md-8 my-auto">
             <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+                <div class="card-header">Masuk</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -39,7 +39,7 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="col-form-label">Belum punya akun? Silakan daftar <a href="{{ url('akun/create') }}">disini</a></label>
+                            <label class="col-form-label">Belum punya akun? Silakan daftar <a href="{{ url('regis') }}">disini</a></label>
                         </div>
 
                         <div class="form-group row mb-0">

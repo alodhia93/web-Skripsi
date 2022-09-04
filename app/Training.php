@@ -24,3 +24,4 @@ class Training extends Model
         'jenisPekerjaan'];
 
 }
+    

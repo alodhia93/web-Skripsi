@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Imports\TrainingImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Filesystem\Filesystem;
+use Validator;
 
 
 class TrainingController extends Controller
@@ -20,6 +21,12 @@ class TrainingController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+    
     public function index()
     {
         $halaman = 'training';
@@ -31,7 +38,8 @@ class TrainingController extends Controller
             $cek = false;
         }
         
-        return view('training.index', compact('halaman','training', 'cek'));
+        $page = true;
+        return view('training.index', compact('halaman','training', 'cek','page'));
     }
 
     /**
@@ -50,6 +58,62 @@ class TrainingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    public function cari(Request $request)
+    {
+        $halaman = 'training';
+        $search = trim($request->input('search'));
+        $masaTunggu = trim($request->input('masaTunggu'));
+        $fakultas = trim($request->input('fakultas'));
+        $namaAtauNim = trim($request->input('namaAtauNim'));
+        if (! empty($search)) {
+            $this->validate($request, [
+                'namaAtauNim' => 'required'
+            ]);
+
+            $query = Training::where($namaAtauNim, 'LIKE', '%' . $search . '%');
+            (! empty($masaTunggu)) ? $query->where('diterimaBulanStlhLulus', $masaTunggu ) : '';
+            (! empty($fakultas)) ? $query->where('fakultas', $fakultas ) : '';
+            $training = $query->paginate(25);
+            $paging = (! empty($masaTunggu)) ? $training->appends(['masaTunggu' => $masaTunggu]) : '';
+            $paging = (! empty($fakultas)) ? $training->appends(['fakultas' => $fakultas]) : '';
+            $paging = (! empty($namaAtauNim)) ? $training->appends(['namaAtauNim' => $namaAtauNim]) : '';
+            $paging = (! empty($search)) ? $training->appends(['search' => $search]) : '';
+            $cek = false;
+            $page = true;
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+        }
+        if (! empty($masaTunggu) && ! empty($fakultas)) {
+            $query = Training::where([
+                ['diterimaBulanStlhLulus', $masaTunggu],
+                ['fakultas', $fakultas]
+            ] );
+            $training = $query->paginate(25);
+            $paging = (! empty($masaTunggu)) ? $training->appends(['masaTunggu' => $masaTunggu]) : '';
+            $paging = (! empty($fakultas)) ? $training->appends(['fakultas' => $fakultas]) : '';
+            $cek = false;
+            $page = true;
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+        }
+        if (! empty($masaTunggu)) {
+            $query = Training::where('diterimaBulanStlhLulus', $masaTunggu);
+            $training = $query->paginate(25);
+            $paging = (! empty($masaTunggu)) ? $training->appends(['masaTunggu' => $masaTunggu]) : '';
+            $cek = false;
+            $page = true;
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+        }
+        if (! empty($fakultas)) {
+            $query = Training::where('fakultas', $fakultas);
+            $training = $query->paginate(25);
+            $paging = (! empty($fakultas)) ? $training->appends(['fakultas' => $fakultas]) : '';
+            $cek = false;
+            $page = true;
+            return view('training.index', compact('halaman','training', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'masaTunggu'));
+        }
+        return redirect('training');
+       }
+    
     public function import_excel(Request $request)
     {
         // validasi
@@ -70,7 +134,7 @@ class TrainingController extends Controller
 		Excel::import(new TrainingImport, public_path('/file_training/'.$nama_file));
  
 		// notifikasi dengan session
-		Session::flash('sukses','Data Siswa Berhasil Diimport!');
+		Session::flash('flash_message','Data Training Berhasil Diimport');
  
 		// alihkan halaman kembali
 		return redirect('training');
@@ -123,6 +187,7 @@ class TrainingController extends Controller
         Training::where('nim', 'like', '%%')->delete();
         $file = new Filesystem;
         $file->cleanDirectory('file_training');
+		Session::flash('flash_message','Data Training Berhasil Dihapus');
         return redirect('training');
     }
 

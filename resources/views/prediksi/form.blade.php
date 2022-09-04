@@ -1,21 +1,21 @@
 <div class="form-group">
             {!! Form::label('nama', 'Nama', ['class' => 'control-label']) !!}
-            {!! Form::text('nama', $mahasiswa->nama, ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::text('nama', $mahasiswa['nama'], ['class' => 'form-control', 'readonly']) !!}
         </div>
 
         <div class="form-group">
             {!! Form::label('nim', 'NIM', ['class' => 'control-label']) !!}
-            {!! Form::text('nim', $mahasiswa->nim, ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::text('nim', $mahasiswa['nim'], ['class' => 'form-control', 'readonly']) !!}
         </div>
 
         <div class="form-group">
             {!! Form::label('jenisKelamin', 'Jenis Kelamin', ['class' => 'control-label']) !!}
-            {!! Form::text('jenisKelamin', $mahasiswa->jenisKelamin, ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::text('jenisKelamin', $mahasiswa['jenisKelamin'], ['class' => 'form-control', 'readonly']) !!}
         </div>
         
         <div class="form-group">
             {!! Form::label('fakultas', 'Fakultas', ['class' => 'control-label']) !!}
-            {!! Form::text('fakultas', $mahasiswa->fakultas, ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::text('fakultas', $mahasiswa['fakultas'], ['class' => 'form-control', 'readonly']) !!}
         </div>
         
         @if ($errors->any())

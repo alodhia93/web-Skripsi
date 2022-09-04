@@ -30,6 +30,11 @@ class Mahasiswa extends Model
         $this->attributes['nama'] = strtolower($nama);
     }
 
+    public function setIpkAttribute($ipk)
+    {
+        $this->attributes['ipk'] = str_replace(',', '.', $ipk);
+    }
+
     protected $fillable = [
         'nim', 
         'nama',
@@ -41,11 +46,8 @@ class Mahasiswa extends Model
         'pengetahuanDiluarBidang',  
         'keterampilanKomputer',
         'pengalamanMagang', 
-        'jenisPekerjaan'
+        'jenisPekerjaan',
+        'prediksi',
     ];
 
-    public function setIpkAttribute($ipk)
-    {
-        $this->attributes['ipk'] = str_replace(',', '.', $ipk);;
-    }
 }

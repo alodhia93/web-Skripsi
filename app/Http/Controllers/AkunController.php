@@ -4,10 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Mahasiswa;
+use Auth;
 use Storage;
 use Illuminate\Support\Facades\File;
 use Validator;
+use Session;
+use App\Mail\VerifikasiEmail;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\AkunRequest;
+use App\Http\Controllers\MahasiswaController;
 
 class AkunController extends Controller
 {
@@ -16,9 +22,18 @@ class AkunController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+    
     public function index()
     {
         $akun = User::paginate(25)->where('verifikasi', '1');
+        $akun = $akun->except(2);
         $halaman = 'akun';
 
         return view('akun.index', compact('halaman','akun'));
@@ -33,6 +48,46 @@ class AkunController extends Controller
     {
         return view('akun.create');
     }
+
+    public function cari(Request $request)
+    {
+        $halaman = 'akun';
+        $search = trim($request->input('search'));
+        $fakultas = trim($request->input('fakultas'));
+        $namaAtauNim = trim($request->input('namaAtauNim'));
+        if (! empty($search)) {
+            $this->validate($request, [
+                'namaAtauNim' => 'required'
+            ]);
+
+            $query = User::where([
+                [$namaAtauNim, 'LIKE', '%' . $search . '%'],
+                ['verifikasi', '1'],
+                ['level', '!=', 'admin']
+            ] );
+            (! empty($fakultas)) ? $query->where('fakultas', $fakultas ) : '';
+            $akun = $query->paginate(25);
+            $paging = (! empty($fakultas)) ? $akun->appends(['fakultas' => $fakultas]) : '';
+            $paging = (! empty($namaAtauNim)) ? $akun->appends(['namaAtauNim' => $namaAtauNim]) : '';
+            $paging = (! empty($search)) ? $akun->appends(['search' => $search]) : '';
+            $cek = false;
+            $page = true;
+            return view('akun.index', compact('halaman','akun', 'cek','page', 'search', 'namaAtauNim', 'fakultas'));
+        }
+        if (! empty($fakultas)) {
+            $query = User::where([
+                ['fakultas', $fakultas],
+                ['verifikasi', '1'],
+                ['level', '!=', 'admin']
+            ] );
+            $akun = $query->paginate(25);
+            $paging = (! empty($fakultas)) ? $akun->appends(['fakultas' => $fakultas]) : '';
+            $cek = false;
+            $page = true;
+            return view('akun.index', compact('halaman','akun', 'cek','page', 'search', 'namaAtauNim', 'fakultas'));
+        }
+        return redirect('akun');
+       }
 
     /**
      * Store a newly created resource in storage.
@@ -105,9 +160,13 @@ class AkunController extends Controller
     public function destroy($id)
     {
         $akun = User::where('id',$id)->first();
+        $mahasiswa = Mahasiswa::where('nim',$akun->nim)->first();
+        echo $akun->nim;
+        //$mahasiswa->delete();
         File::delete('kpmUpload/'.$akun->kpm);
+        Mail::to($akun->email)->send(new VerifikasiEmail($akun->nama, '3'));
         $akun->delete();
-
+        Session::flash('flash_message','Akun Mahasiswa Telah Dihapus');
         return redirect('akun');
     }
 }

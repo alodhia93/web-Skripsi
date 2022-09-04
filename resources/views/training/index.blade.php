@@ -1,55 +1,50 @@
 @extends('template')
 
 @section('main')
-		<center>
-			<h4>Import Excel Ke Database Dengan Laravel</h4>
-		</center>
  
 		{{-- notifikasi form validasi --}}
 		@if ($errors->has('file'))
-		<span class="invalid-feedback" role="alert">
-			<strong>{{ $errors->first('file') }}</strong>
-		</span>
+		<div class="alert alert-danger alert-dismissible fade show" role="alert">
+			{{ $errors->first('file') }}
+			<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+			  <span aria-hidden="true">&times;</span>
+			</button>
+		  </div>
 		@endif
- 
-		{{-- notifikasi sukses --}}
-		@if ($sukses = Session::get('sukses'))
-		<div class="alert alert-success alert-block">
-			<button type="button" class="close" data-dismiss="alert">×</button> 
-			<strong>{{ $sukses }}</strong>
-		</div>
-		@endif
+		@include('__partial')
  
  
 		<!-- Import Excel -->
-		<div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-			<div class="modal-dialog" role="document">
-				<form method="post" action="training/import_excel" enctype="multipart/form-data">
-					<div class="modal-content">
-						<div class="modal-header">
-							<h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
-						</div>
-						<div class="modal-body">
- 
-							{{ csrf_field() }}
- 
-							<label>Pilih file excel</label>
-							<div class="form-group">
-								<input type="file" name="file" required="required">
+			<div class="modal fade" id="importExcel" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<form method="post" action="training/import_excel" enctype="multipart/form-data">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Import Excel</h5>
 							</div>
- 
+							<div class="modal-body">
+	
+								{{ csrf_field() }}
+	
+								<label>Pilih file excel</label>
+								<div class="form-group">
+									<input type="file" name="file" required="required">
+								</div>
+	
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+								<button type="submit" class="btn btn-primary">Import</button>
+							</div>
 						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-							<button type="submit" class="btn btn-primary">Import</button>
-						</div>
-					</div>
-				</form>
+					</form>
+				</div>
 			</div>
-		</div>
  
  
 		<div>
+			
+
 			<h2>Data Training</h2>
 			<button type="button" class="btn btn-primary mr-5" data-toggle="modal" data-target="#importExcel">
 				Unggah Data
@@ -63,6 +58,7 @@
 			@if ($cek)
 			<p>Data training tidak ada</p>
 			@else
+			@include('training.form_pencarian')
 			<table class="table">
 				<thead>
 					<tr>
@@ -99,9 +95,12 @@
 			</table>
 				
 			@endif
+			@if ($page == true)
 			<div>
 				{{ $training->links() }}
 			</div>
+			@endif
+			
 			
 		</div>
 		

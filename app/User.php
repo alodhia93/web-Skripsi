@@ -16,6 +16,16 @@ class User extends Authenticatable
      *
      * @var array
      */
+    public function getNamaAttribute($nama)
+    {
+        return ucwords($nama);
+    }
+
+    public function setNamaAttribute($nama)
+    {
+        $this->attributes['nama'] = strtolower($nama);
+    }
+    
     protected $fillable = [
         'nim','nama', 'email', 'jenisKelamin', 'fakultas', 'kpm', 'password', 'verifikasi',
     ];

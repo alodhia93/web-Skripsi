@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Session;
+use Session;    
 use Validator;
 use App\Mahasiswa;
 use App\User;
+use Auth;
+use Illuminate\Support\Facades\Http;
 
 class PrediksiController extends Controller
 {
@@ -15,21 +17,22 @@ class PrediksiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('mahasiswa');
+    }
     public function index()
     {
         $halaman = 'prediksi'; 
 
-        $mahasiswa = Mahasiswa::firstWhere('nim',Session::get('nim'));
+        $mahasiswa = Mahasiswa::firstWhere('nim',Auth::user()->nim);
         
         if (!$mahasiswa) {
-            create();
+            return $this->create();
         }
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
-        
-        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
-
-        return view('prediksi.index', compact('mahasiswa','prediksi','halaman'));
+        return view('prediksi.index', compact('mahasiswa','halaman'));
     }
 
     /**
@@ -41,8 +44,7 @@ class PrediksiController extends Controller
     {
         $halaman = 'prediksi';
 
-        $mahasiswa = User::firstWhere('nim',Session::get('nim'));
-
+        $mahasiswa = User::where('nim',Auth::user()->nim)->first();
         return view('prediksi.create', compact('halaman','mahasiswa'));
     }
 
@@ -54,7 +56,9 @@ class PrediksiController extends Controller
      */
     public function store(Request $request)
     {
-        $halaman = 'mahasiswa';
+        //$halaman = 'mahasiswa';
+
+        //$request->ipk = str_replace(',', '.', $request->ipk);
         if ($request->ipk <= 2.75) {
             $request->merge(['ipkPredikat' => 'Memuaskan']);
         } elseif ($request->ipk <= 3.5) {
@@ -74,12 +78,24 @@ class PrediksiController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect('mahasiswa/create')
+            return redirect('prediksi/create')
                 ->withInput()
                 ->withErrors($validator);
         }
-        
         Mahasiswa::Create($request->all());
+
+        $mahasiswa = Mahasiswa::firstWhere('nim',Auth::user()->nim);
+
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
+        
+        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+
+        $mahasiswa->prediksi = $prediksi;
+
+        $mahasiswa->save();
+        
+		Session::flash('flash_message','Data Prediksi Berhasil Disimpan');
+        //Mahasiswa::Create($request->all());
 
         return redirect('prediksi');
     }
@@ -101,13 +117,13 @@ class PrediksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($mahasiswa)
     {
-        $halaman = 'mahasiswa'; 
+        $halaman = 'prediksi'; 
 
-        $mahasiswa = Mahasiswa::firstWhere('nim',Session::get('nim'));
+        $mahasiswa = Mahasiswa::firstWhere('nim',Auth::user()->nim);
         
-        return view('mahasiswa.edit', compact('mahasiswa','halaman','id'));
+        return view('prediksi.edit', compact('mahasiswa','halaman'));
     }
 
     /**
@@ -117,7 +133,7 @@ class PrediksiController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Mahasiswa $mahasiswa, $request)
+    public function update(Request $request, Mahasiswa $mahasiswa)
     {
         if ($request->ipk <= 2.75) {
             $request->merge(['ipkPredikat' => 'Memuaskan']);
@@ -137,14 +153,23 @@ class PrediksiController extends Controller
             'jenisPekerjaan'            =>  'required',
         ]);
 
+        $data = Mahasiswa::firstWhere('nim',Auth::user()->nim);
         if($validator->fails()){
-            return redirect('mahasiswa/edit')
+            return redirect('prediksi/'.$data->nim.'/edit')
                 ->withInput()
                 ->withErrors($validator);
         }
+        $data->update($request->all());
 
-        $mahasiswa->update($request->all());
-        return redirect('mahasiswa');
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. Auth::user()->nim)->json();
+        
+        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+
+        $data->prediksi = $prediksi;
+
+        $data->save();
+		Session::flash('flash_message','Data Prediksi Berhasil Disimpan');
+        return redirect('prediksi');
     }
 
     /**

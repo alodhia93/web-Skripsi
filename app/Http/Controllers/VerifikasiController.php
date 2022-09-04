@@ -7,7 +7,10 @@ use App\User;
 use Storage;
 use Illuminate\Support\Facades\File;
 use Validator;
+use Session;
 use App\Http\Requests\AkunRequest;
+use App\Mail\VerifikasiEmail;
+use Illuminate\Support\Facades\Mail;
 
 class VerifikasiController extends Controller
 {
@@ -16,9 +19,17 @@ class VerifikasiController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('admin');
+    }
+
     public function index()
     {
         $akun = User::paginate(25)->where('verifikasi', '0');
+        $akun = $akun->except(2);
         $halaman = 'akun';
 
         return view('verifikasi.index', compact('halaman','akun'));
@@ -33,7 +44,43 @@ class VerifikasiController extends Controller
     {
         //
     }
+    public function cari(Request $request)
+    {
+        $halaman = 'akun';
+        $search = trim($request->input('search'));
+        $fakultas = trim($request->input('fakultas'));
+        $namaAtauNim = trim($request->input('namaAtauNim'));
+        if (! empty($search)) {
+            $this->validate($request, [
+                'namaAtauNim' => 'required'
+            ]);
 
+            $query = User::where([
+                [$namaAtauNim, 'LIKE', '%' . $search . '%'],
+                ['verifikasi', '0']
+            ] );
+            (! empty($fakultas)) ? $query->where('fakultas', $fakultas ) : '';
+            $akun = $query->paginate(25);
+            $paging = (! empty($fakultas)) ? $akun->appends(['fakultas' => $fakultas]) : '';
+            $paging = (! empty($namaAtauNim)) ? $akun->appends(['namaAtauNim' => $namaAtauNim]) : '';
+            $paging = (! empty($search)) ? $akun->appends(['search' => $search]) : '';
+            $cek = false;
+            $page = true;
+            return view('verifikasi.index', compact('halaman','akun', 'cek','page', 'search', 'namaAtauNim', 'fakultas'));
+        }
+        if (! empty($fakultas)) {
+            $query = User::where([
+                ['fakultas', $fakultas],
+                ['verifikasi', '0']
+            ] );
+            $akun = $query->paginate(25);
+            $paging = (! empty($fakultas)) ? $akun->appends(['fakultas' => $fakultas]) : '';
+            $cek = false;
+            $page = true;
+            return view('verifikasi.index', compact('halaman','akun', 'cek','page', 'search', 'namaAtauNim', 'fakultas'));
+        }
+        return redirect('verifikasi');
+       }
     /**
      * Store a newly created resource in storage.
      *
@@ -80,6 +127,9 @@ class VerifikasiController extends Controller
     {
         $akun = User::findOrFail($id);
         $akun->update($request->all());
+
+        Mail::to($akun->email)->send(new VerifikasiEmail($akun->nama, $akun->verifikasi));
+        Session::flash('flash_message','Akun Mahasiswa Telah Diverifikasi');
         return redirect('verifikasi');
     }
 
@@ -93,8 +143,9 @@ class VerifikasiController extends Controller
     {
         $akun = User::where('id',$id)->first();
         File::delete('kpmUpload/'.$akun->kpm);
+        Mail::to($akun->email)->send(new VerifikasiEmail($akun->nama, $akun->verifikasi));
         $akun->delete();
-
+        Session::flash('flash_message','Akun Mahasiswa Telah Ditolak');
         return redirect('akun');
     }
 }
