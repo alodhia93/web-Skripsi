@@ -8,7 +8,7 @@ class Mahasiswa extends Model
 {
     protected $table = 'mahasiswa';
     
-    protected $primaryKey = 'nim';
+    protected $primaryKey = 'nim_mahasiswa';
 
     public $incrementing = false;
 
@@ -17,7 +17,7 @@ class Mahasiswa extends Model
 
     public function getRouteKeyName()
     {
-        return 'nim';
+        return 'nim_mahasiswa';
     }
 
     public function getNamaAttribute($nama)
@@ -27,7 +27,7 @@ class Mahasiswa extends Model
 
     public function setNamaAttribute($nama)
     {
-        $this->attributes['nama'] = strtolower($nama);
+        $this->attributes['nama_mahasiswa'] = strtolower($nama);
     }
 
     public function setIpkAttribute($ipk)
@@ -36,17 +36,16 @@ class Mahasiswa extends Model
     }
 
     protected $fillable = [
-        'nim', 
-        'nama',
-        'jenisKelamin',
+        'nim_mahasiswa', 
+        'nama_mahasiswa',
+        'Jenis_Kelamin',
         'ipk',
-        'ipkPredikat',
-        'fakultas', 
-        'kemampuanBahasaInggris', 
-        'pengetahuanDiluarBidang',  
-        'keterampilanKomputer',
-        'pengalamanMagang', 
-        'jenisPekerjaan',
+        'prodi',
+        'Pengetahuan_di_bidang_atau_disiplin_ilmu', 
+        'Pengetahuan_di_luar_bidang_atau_disiplin_ilmu', 
+        'Pengetahuan_umum',  
+        'Berpikir_kritis',
+        'predikat_IPK',
         'prediksi',
     ];
 

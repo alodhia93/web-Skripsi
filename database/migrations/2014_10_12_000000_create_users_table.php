@@ -19,10 +19,8 @@ class CreateUsersTable extends Migration
             $table->string('nama');
             $table->string('email');
             $table->string('jenisKelamin');
-            $table->string('fakultas');
-            $table->string('kpm')->nullable();
+            $table->string('prodi');
             $table->string('password');
-            $table->boolean('verifikasi');
             $table->enum('level', ['mahasiswa', 'admin']);
             $table->rememberToken();
             $table->timestamps();

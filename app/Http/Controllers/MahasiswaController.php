@@ -39,10 +39,7 @@ class MahasiswaController extends Controller
             $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $ms->nim)->json();
             $prediksi[] = $client[0]['prediction(diterimaBulanStlhLulus)'];
         }
-        //$client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrainList?')->json();
         
-        //$prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
-        //echo $prediksi;
         return view('mahasiswa.index', compact(['mahasiswa','halaman','prediksi']));
     }
 

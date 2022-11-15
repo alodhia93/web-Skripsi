@@ -63,12 +63,12 @@
 			transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 		}
     </style>
-    <title>Prediksi Masa Depan</title>
+    <title>Prediksi IPK</title>
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eef084;">  
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">Prediksi Masa Tunggu</a>
+            <a class="navbar-brand" href="{{ url('/') }}">Prediksi IPK</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>

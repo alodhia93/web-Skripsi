@@ -11,17 +11,16 @@ class Training extends Model
     protected $primaryKey = 'nim';
 
     protected $fillable = [
-        'diterimaBulanStlhLulus',
-        'nim', 
-        'nama',
-        'jenisKelamin',
-        'ipkPredikat',
-        'fakultas', 
-        'kemampuanBahasaInggris', 
-        'pengetahuanDiluarBidang',  
-        'keterampilanKomputer',
-        'pengalamanMagang', 
-        'jenisPekerjaan'];
+        'prodi',
+        'nim_mahasiswa', 
+        'nama_mahasiswa',
+        'Jenis_Kelamin',
+        'ipk',
+        'Pengetahuan_di_bidang_atau_disiplin_ilmu', 
+        'Pengetahuan_di_luar_bidang_atau_disiplin_ilmu', 
+        'Pengetahuan_umum',  
+        'Berpikir_kritis',
+        'predikat_IPK'];
 
 }
     
