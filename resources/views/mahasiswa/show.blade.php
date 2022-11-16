@@ -8,52 +8,42 @@
             <table class="table">
                 <tr>
                     <td>NIM</td>
-                    <td>{{ $mahasiswa->nim}}</td>
+                    <td>{{ $mahasiswa->nim_mahasiswa}}</td>
                 </tr>
                 <tr>
                     <td>Nama</td>
-                    <td>{{ $mahasiswa->nama  }}</td>
+                    <td>{{ $mahasiswa->nama_mahasiswa }}</td>
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
-                    <td>{{ $mahasiswa->jenisKelamin  }}</td>
+                    <td>{{ $mahasiswa->Jenis_Kelamin  }}</td>
                 </tr>
                 <tr>
-                    <td>IPK</td>
-                    <td>{{ $mahasiswa->ipk }}</td>
+                    <td>Program Studi</td>
+                    <td>{{ $mahasiswa->prodi }}</td>
                 </tr>
                 <tr>
-                    <td>Predikat IPK</td>
-                    <td>{{ $mahasiswa->ipkPredikat }}</td>
+                    <td>Pengetahuan di bidang atau disiplin ilmu</td>
+                    <td>{{ $mahasiswa->Pengetahuan_di_bidang_atau_disiplin_ilmu }}</td>
                 </tr>
                 <tr>
-                    <td>Fakultas</td>
-                    <td>{{ $mahasiswa->fakultas }}</td>
+                    <td>Pengetahuan di luar bidang atau disiplin ilmu</td>
+                    <td>{{ $mahasiswa->Pengetahuan_di_luar_bidang_atau_disiplin_ilmu }}</td>
                 </tr>
                 <tr>
-                    <td>Kemampuan Bahasa Inggris</td>
-                    <td>{{ $mahasiswa->kemampuanBahasaInggris }}</td>
+                    <td>Pengetahuan umum</td>
+                    <td>{{ $mahasiswa->Pengetahuan_umum }}</td>
                 </tr>
                 <tr>
-                    <td>Pengetahuan Diluar Bidang</td>
-                    <td>{{ $mahasiswa->pengetahuanDiluarBidang }}</td>
+                    <td>Berpikir kritis</td>
+                    <td>{{ $mahasiswa->Berpikir_kritis }}</td>
                 </tr>
                 
                 <tr>
-                    <td>Keterampilan Komputer</td>
-                    <td>{{ $mahasiswa->keterampilanKomputer }}</td>
+                    <td>predikat IPK</td>
+                    <td>{{ $mahasiswa->predikat_IPK }}</td>
                 </tr>
-                <tr>
-                    <td>Pengalaman Magang</td>
-                    <td>{{ $mahasiswa->pengalamanMagang }}</td>
-                </tr>
-                <tr>
-                    <td>Jenis Pekerjaan</td>
-                    <td>{{ $mahasiswa->jenisPekerjaan }}</td>
-                </tr>
-            </table>
-            <p>Perkiraan {{$mahasiswa->nama}} mendapatkan pekerjaan setelah lulus terbilang {{ $mahasiswa->prediksi }} kira-kira {{ $mahasiswa->prediksi === "Cepat" ? "1 - 6 bulan" : ($mahasiswa->prediksi === "Sedang" ? "7 - 12 bulan" : "lebih dari 1 tahun" )}}</p>
-        </div>
+            </table></div>
         
     </div>
 @endsection

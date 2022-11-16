@@ -26,7 +26,8 @@ class PrediksiController extends Controller
     {
         $halaman = 'prediksi'; 
 
-        $mahasiswa = Mahasiswa::firstWhere('nim',Auth::user()->nim);
+        $mahasiswa = Mahasiswa::firstWhere('nim_mahasiswa',Auth::user()->nim);
+        
         
         if (!$mahasiswa) {
             return $this->create();
@@ -45,7 +46,16 @@ class PrediksiController extends Controller
         $halaman = 'prediksi';
 
         $mahasiswa = User::where('nim',Auth::user()->nim)->first();
-        return view('prediksi.create', compact('halaman','mahasiswa'));
+
+        if($mahasiswa->Jenis_Kelamin == "LakiLaki"){
+            $LakiLaki = 1;
+            $Perempuan = 0;
+        }else{
+            $LakiLaki = 0;
+            $Perempuan = 1;
+        }
+
+        return view('prediksi.create', compact('halaman','mahasiswa','LakiLaki','Perempuan'));
     }
 
     /**
@@ -59,22 +69,13 @@ class PrediksiController extends Controller
         //$halaman = 'mahasiswa';
 
         //$request->ipk = str_replace(',', '.', $request->ipk);
-        if ($request->ipk <= 2.75) {
-            $request->merge(['ipkPredikat' => 'Memuaskan']);
-        } elseif ($request->ipk <= 3.5) {
-            $request->merge(['ipkPredikat' => 'Sangat Memuaskan']);
-        } else {
-            $request->merge(['ipkPredikat' => 'Pujian']);
-            //$request->ipkPredikat = "Pujian";
-        }
+        
 
         $validator = Validator::make($request->all(),[
-            'ipk'   =>  'required|numeric|between:1,4.00',
-            'kemampuanBahasaInggris'    =>  'required',
-            'pengetahuanDiluarBidang'   =>  'required',
-            'keterampilanKomputer'      =>  'required',
-            'pengalamanMagang'          =>  'required',
-            'jenisPekerjaan'            =>  'required',
+            'Pengetahuan_di_bidang_atau_disiplin_ilmu'    =>  'required',
+            'Pengetahuan_di_luar_bidang_atau_disiplin_ilmu'   =>  'required',
+            'Pengetahuan_umum'      =>  'required',
+            'Berpikir_kritis'          =>  'required',
         ]);
 
         if($validator->fails()){
@@ -82,15 +83,31 @@ class PrediksiController extends Controller
                 ->withInput()
                 ->withErrors($validator);
         }
+        print_r($request->all());
+        //return;
         Mahasiswa::Create($request->all());
 
-        $mahasiswa = Mahasiswa::firstWhere('nim',Auth::user()->nim);
+        $mahasiswa = Mahasiswa::firstWhere('nim_mahasiswa',Auth::user()->nim);
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/fridosql?nim_mahasiswa='. $mahasiswa->nim_mahasiswa)->json();
         
-        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+        $Dengan_Pujian = $client['prediction(predikat_IPK_Dengan_Pujian)'];
+        $Sangat_Memuaskan = $client['prediction(predikat_IPK_Sangat_Memuaskan)'];
+        $Memuaskan = $client['prediction(predikat_IPK_Memuaskan)'];
 
-        $mahasiswa->prediksi = $prediksi;
+        if($Dengan_Pujian > $Sangat_Memuaskan && $Dengan_Pujian > $Memuaskan){
+            $predikat_IPK = "Dengan Pujian";
+        }
+        elseif($Dengan_Pujian < $Sangat_Memuaskan && $Sangat_Memuaskan > $Memuaskan){
+            $predikat_IPK = "Sangat Memuaskan";
+        }elseif($Dengan_Pujian < $Memuaskan && $Sangat_Memuaskan < $Memuaskan){
+            $predikat_IPK = "Memuaskan";
+        }
+
+        $mahasiswa->predikat_IPK = $predikat_IPK;
+        $mahasiswa->predikat_IPK_Dengan_Pujian = $Dengan_Pujian;
+        $mahasiswa->predikat_IPK_Sangat_Memuaskan = $Sangat_Memuaskan;
+        $mahasiswa->predikat_IPK_Memuaskan = $Memuaskan;
 
         $mahasiswa->save();
         
@@ -121,9 +138,15 @@ class PrediksiController extends Controller
     {
         $halaman = 'prediksi'; 
 
-        $mahasiswa = Mahasiswa::firstWhere('nim',Auth::user()->nim);
-        
-        return view('prediksi.edit', compact('mahasiswa','halaman'));
+        $mahasiswa = Mahasiswa::firstWhere('nim_mahasiswa',Auth::user()->nim);
+        if($mahasiswa->Jenis_Kelamin == "LakiLaki"){
+            $LakiLaki = 1;
+            $Perempuan = 0;
+        }else{
+            $LakiLaki = 0;
+            $Perempuan = 1;
+        }
+        return view('prediksi.edit', compact('mahasiswa','halaman','LakiLaki','Perempuan'));
     }
 
     /**
@@ -135,25 +158,14 @@ class PrediksiController extends Controller
      */
     public function update(Request $request, Mahasiswa $mahasiswa)
     {
-        if ($request->ipk <= 2.75) {
-            $request->merge(['ipkPredikat' => 'Memuaskan']);
-        } elseif ($request->ipk <= 3.5) {
-            $request->merge(['ipkPredikat' => 'Sangat Memuaskan']);
-        } else {
-            $request->merge(['ipkPredikat' => 'Pujian']);
-            //$request->ipkPredikat = "Pujian";
-        }
-
         $validator = Validator::make($request->all(),[
-            'ipk'   =>  'required|numeric|between:1,4.00',
-            'kemampuanBahasaInggris'    =>  'required',
-            'pengetahuanDiluarBidang'   =>  'required',
-            'keterampilanKomputer'      =>  'required',
-            'pengalamanMagang'          =>  'required',
-            'jenisPekerjaan'            =>  'required',
+            'Pengetahuan_di_bidang_atau_disiplin_ilmu'    =>  'required',
+            'Pengetahuan_di_luar_bidang_atau_disiplin_ilmu'   =>  'required',
+            'Pengetahuan_umum'      =>  'required',
+            'Berpikir_kritis'          =>  'required',
         ]);
 
-        $data = Mahasiswa::firstWhere('nim',Auth::user()->nim);
+        $data = Mahasiswa::firstWhere('nim_mahasiswa',Auth::user()->nim);
         if($validator->fails()){
             return redirect('prediksi/'.$data->nim.'/edit')
                 ->withInput()
@@ -161,11 +173,25 @@ class PrediksiController extends Controller
         }
         $data->update($request->all());
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. Auth::user()->nim)->json();
+        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/fridosql?nim_mahasiswa='. $data->nim_mahasiswa)->json();
         
-        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
+        $Dengan_Pujian = $client['prediction(predikat_IPK_Dengan_Pujian)'];
+        $Sangat_Memuaskan = $client['prediction(predikat_IPK_Sangat_Memuaskan)'];
+        $Memuaskan = $client['prediction(predikat_IPK_Memuaskan)'];
 
-        $data->prediksi = $prediksi;
+        if($Dengan_Pujian > $Sangat_Memuaskan && $Dengan_Pujian > $Memuaskan){
+            $predikat_IPK = "Dengan Pujian";
+        }
+        elseif($Dengan_Pujian < $Sangat_Memuaskan && $Sangat_Memuaskan > $Memuaskan){
+            $predikat_IPK = "Sangat Memuaskan";
+        }elseif($Dengan_Pujian < $Memuaskan && $Sangat_Memuaskan < $Memuaskan){
+            $predikat_IPK = "Memuaskan";
+        }
+
+        $data->predikat_IPK = $predikat_IPK;
+        $data->predikat_IPK_Dengan_Pujian = $Dengan_Pujian;
+        $data->predikat_IPK_Sangat_Memuaskan = $Sangat_Memuaskan;
+        $data->predikat_IPK_Memuaskan = $Memuaskan;
 
         $data->save();
 		Session::flash('flash_message','Data Prediksi Berhasil Disimpan');

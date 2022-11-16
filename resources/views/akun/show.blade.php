@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                     <td>Jenis Kelamin</td>
-                    <td>{{ $akun->jenisKelamin  }}</td>
+                    <td>{{ $akun->Jenis_Kelamin  }}</td>
                 </tr>
                 <tr>
                     <td>Email</td>
@@ -48,8 +48,12 @@
                     <td>Fakultas</td>
                     <td>{{ $akun->fakultas }}</td>
                 </tr>
+                <tr>
+                    <td>Program Studi</td>
+                    <td>{{ $akun->prodi }}</td>
+                </tr>
                     <td colspan="2">
-                        <img src="{{ asset('kpmUpload/'.$akun->kpm) }}" class="zoom">
+                        <img src="{{ asset('fotoUpload/'.$akun->foto) }}" class="zoom">
                     </td>
                 </tr>
             </table></div>

@@ -1,129 +1,102 @@
 <div class="form-group">
-            {!! Form::label('nama', 'Nama', ['class' => 'control-label']) !!}
-            {!! Form::text('nama', $mahasiswa['nama'], ['class' => 'form-control', 'readonly']) !!}
+    {!! Form::label('nim_mahasiswa', 'NIM', ['class' => 'control-label']) !!}
+    {!! Form::text('nim_mahasiswa', $mahasiswa['nim'], ['class' => 'form-control', 'readonly']) !!}
+</div>
+
+<div class="form-group">
+            {!! Form::label('nama_mahasiswa', 'Nama', ['class' => 'control-label']) !!}
+            {!! Form::text('nama_mahasiswa', $mahasiswa['nama'], ['class' => 'form-control', 'readonly']) !!}
         </div>
 
         <div class="form-group">
-            {!! Form::label('nim', 'NIM', ['class' => 'control-label']) !!}
-            {!! Form::text('nim', $mahasiswa['nim'], ['class' => 'form-control', 'readonly']) !!}
-        </div>
-
-        <div class="form-group">
-            {!! Form::label('jenisKelamin', 'Jenis Kelamin', ['class' => 'control-label']) !!}
-            {!! Form::text('jenisKelamin', $mahasiswa['jenisKelamin'], ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::label('Jenis_Kelamin', 'Jenis Kelamin', ['class' => 'control-label']) !!}
+            {!! Form::text('Jenis_Kelamin', $mahasiswa['Jenis_Kelamin'] , ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::hidden('LakiLaki', $LakiLaki) !!}
+            {!! Form::hidden('Perempuan', $Perempuan) !!}
         </div>
         
         <div class="form-group">
-            {!! Form::label('fakultas', 'Fakultas', ['class' => 'control-label']) !!}
-            {!! Form::text('fakultas', $mahasiswa['fakultas'], ['class' => 'form-control', 'readonly']) !!}
+            {!! Form::label('prodi', 'Program Studi', ['class' => 'control-label']) !!}
+            {!! Form::text('prodi', $mahasiswa['prodi'], ['class' => 'form-control', 'readonly']) !!}
         </div>
         
+
         @if ($errors->any())
-            <div class="form-group {{ $errors->has('ipk') ? 'has-error' : 'has-success'}}">
+            <div class="form-group {{ $errors->has('Pengetahuan_di_bidang_atau_disiplin_ilmu') ? 'has-error' : 'has-success'}}">
         @else
             <div class="form-group">
         @endif
-            {!! Form::label('ipk', 'IPK', ['class' => 'control-label']) !!}
-            {!! Form::text('ipk', null, ['class' => 'form-control']) !!}
-            {!! Form::hidden('ipkPredikat', "2",) !!}
-            @if ($errors->has('ipk'))
-                <span class="help-block">{{ $errors->first('ipk') }}</span>
+            {!! Form::label('Pengetahuan_di_bidang_atau_disiplin_ilmu', 'Pengetahuan di bidang atau disiplin ilmu', ['class' => 'control-label']) !!}
+            {!! Form::select('Pengetahuan_di_bidang_atau_disiplin_ilmu',[
+                null => 'Silahkan pilih',
+                '5' => 'Sangat Tinggi',
+                '4' => 'Tinggi',
+                '3' => 'Cukup',
+                '2' => 'Rendah',
+                '1' => 'Sangat Rendah',
+        ], null, ['class' => 'form-control']) !!}
+            @if ($errors->has('Pengetahuan_di_bidang_atau_disiplin_ilmu'))
+                <span class="help-block">{{ $errors->first('Pengetahuan_di_bidang_atau_disiplin_ilmu') }}</span>
             @endif
         </div>
 
         @if ($errors->any())
-            <div class="form-group {{ $errors->has('kemampuanBahasaInggris') ? 'has-error' : 'has-success'}}">
+            <div class="form-group {{ $errors->has('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu') ? 'has-error' : 'has-success'}}">
         @else
             <div class="form-group">
         @endif
-            {!! Form::label('kemampuanBahasaInggris', 'Kemampuan Bahasa Inggris', ['class' => 'control-label']) !!}
-            {!! Form::select('kemampuanBahasaInggris',[
+            {!! Form::label('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu', 'Pengetahuan di luar bidang atau disiplin ilmu', ['class' => 'control-label']) !!}
+            {!! Form::select('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu',[
                 null => 'Silahkan pilih',
-                'Sangat besar' => 'Sangat besar',
-                'Besar' => 'Besar',
-                'Cukup besar' => 'Cukup besar',
-                'Kurang' => 'Kurang',
-                'Tidak sama sekali' => 'Tidak sama sekali',
+                '5' => 'Sangat Tinggi',
+                '4' => 'Tinggi',
+                '3' => 'Cukup',
+                '2' => 'Rendah',
+                '1' => 'Sangat Rendah',
         ], null, ['class' => 'form-control']) !!}
-            @if ($errors->has('kemampuanBahasaInggris'))
-                <span class="help-block">{{ $errors->first('kemampuanBahasaInggris') }}</span>
+            @if ($errors->has('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu'))
+                <span class="help-block">{{ $errors->first('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu') }}</span>
             @endif
         </div>
 
         @if ($errors->any())
-            <div class="form-group {{ $errors->has('pengetahuanDiluarBidang') ? 'has-error' : 'has-success'}}">
+            <div class="form-group {{ $errors->has('Pengetahuan_umum') ? 'has-error' : 'has-success'}}">
         @else
             <div class="form-group">
         @endif
-            {!! Form::label('pengetahuanDiluarBidang', 'Pengetahuan Diluar Bidang', ['class' => 'control-label']) !!}
-            {!! Form::select('pengetahuanDiluarBidang',[
+            {!! Form::label('Pengetahuan_umum', 'Pengetahuan umum', ['class' => 'control-label']) !!}
+            {!! Form::select('Pengetahuan_umum',[
                 null => 'Silahkan pilih',
-                'Sangat besar' => 'Sangat besar',
-                'Besar' => 'Besar',
-                'Cukup besar' => 'Cukup besar',
-                'Kurang' => 'Kurang',
-                'Tidak sama sekali' => 'Tidak sama sekali',
+                '5' => 'Sangat Tinggi',
+                '4' => 'Tinggi',
+                '3' => 'Cukup',
+                '2' => 'Rendah',
+                '1' => 'Sangat Rendah',
         ], null, ['class' => 'form-control']) !!}
-            @if ($errors->has('pengetahuanDiluarBidang'))
-                <span class="help-block">{{ $errors->first('pengetahuanDiluarBidang') }}</span>
+            @if ($errors->has('Pengetahuan_umum'))
+                <span class="help-block">{{ $errors->first('Pengetahuan_umum') }}</span>
             @endif
         </div>
 
         @if ($errors->any())
-            <div class="form-group {{ $errors->has('keterampilanKomputer') ? 'has-error' : 'has-success'}}">
+            <div class="form-group {{ $errors->has('Berpikir_kritis') ? 'has-error' : 'has-success'}}">
         @else
             <div class="form-group">
         @endif
-            {!! Form::label('keterampilanKomputer', 'Keterampilan Komputer', ['class' => 'control-label']) !!}
-            {!! Form::select('keterampilanKomputer',[
+            {!! Form::label('Berpikir_kritis', 'Berpikir kritis', ['class' => 'control-label']) !!}
+            {!! Form::select('Berpikir_kritis',[
                 null => 'Silahkan pilih',
-                'Sangat besar' => 'Sangat besar',
-                'Besar' => 'Besar',
-                'Cukup besar' => 'Cukup besar',
-                'Kurang' => 'Kurang',
-                'Tidak sama sekali' => 'Tidak sama sekali',
+                '5' => 'Sangat Tinggi',
+                '4' => 'Tinggi',
+                '3' => 'Cukup',
+                '2' => 'Rendah',
+                '1' => 'Sangat Rendah',
         ], null, ['class' => 'form-control']) !!}
-            @if ($errors->has('keterampilanKomputer'))
-                <span class="help-block">{{ $errors->first('keterampilanKomputer') }}</span>
+            @if ($errors->has('Berpikir_kritis'))
+                <span class="help-block">{{ $errors->first('Berpikir_kritis') }}</span>
             @endif
         </div>
-
-        @if ($errors->any())
-            <div class="form-group {{ $errors->has('pengalamanMagang') ? 'has-error' : 'has-success'}}">
-        @else
-            <div class="form-group">
-        @endif
-            {!! Form::label('pengalamanMagang', 'Pengalaman Magang', ['class' => 'control-label']) !!}
-            {!! Form::select('pengalamanMagang',[
-                null => 'Silahkan pilih',
-                'Sangat besar' => 'Sangat besar',
-                'Besar' => 'Besar',
-                'Cukup besar' => 'Cukup besar',
-                'Kurang' => 'Kurang',
-                'Tidak sama sekali' => 'Tidak sama sekali',
-        ], null, ['class' => 'form-control']) !!}
-            @if ($errors->has('pengalamanMagang'))
-                <span class="help-block">{{ $errors->first('pengalamanMagang') }}</span>
-            @endif
-        </div>
-
-        @if ($errors->any())
-            <div class="form-group {{ $errors->has('jenisPekerjaan') ? 'has-error' : 'has-success'}}">
-        @else
-            <div class="form-group">
-        @endif
-            {!! Form::label('jenisPekerjaan', 'Jenis Pekerjaan', ['class' => 'control-label']) !!}
-            {!! Form::select('jenisPekerjaan',[
-                null => 'Silahkan pilih',
-                'Instansi Pemerintah' => 'Instansi Pemerintah',
-                'Organisasi non-profit/Lembaga Swadaya Masyarakat' => 'Organisasi non-profit/Lembaga Swadaya Masyarakat',
-                'Perusahaan swasta' => 'Perusahaan swasta',
-                'Wiraswasta/perusahaan sendiri' => 'Wiraswasta/perusahaan sendiri',
-                'Lainnya' => 'Lainnya',
-        ], null, ['class' => 'form-control']) !!}
-            @if ($errors->has('jenisPekerjaan'))
-                <span class="help-block">{{ $errors->first('jenisPekerjaan') }}</span>
-            @endif
+        
         </div>
 
         <div class="form-group">

@@ -18,12 +18,16 @@ class CreateTableDataTraining extends Migration
             $table->string('nim_mahasiswa');
             $table->string('nama_mahasiswa');
             $table->string('Jenis_Kelamin');
-            $table->string('ipk');
-            $table->string('Pengetahuan_di_bidang_atau_disiplin_ilmu');
-            $table->string('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu');
-            $table->string('Pengetahuan_umum');
-            $table->string('Berpikir_kritis');
+            $table->integer('LakiLaki');
+            $table->integer('Perempuan');
+            $table->integer('Pengetahuan_di_bidang_atau_disiplin_ilmu');
+            $table->integer('Pengetahuan_di_luar_bidang_atau_disiplin_ilmu');
+            $table->integer('Pengetahuan_umum');
+            $table->integer('Berpikir_kritis');
             $table->string('predikat_IPK');
+            $table->integer('predikat_IPK_Dengan_Pujian');
+            $table->integer('predikat_IPK_Sangat_Memuaskan');
+            $table->integer('predikat_IPK_Memuaskan');
             $table->timestamps();
         });
     }

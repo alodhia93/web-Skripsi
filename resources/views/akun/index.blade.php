@@ -3,7 +3,6 @@
 @section('main')
 		<div>
 			<h2>Akun Mahasiswa</h2>
-			<a href="{{ url('verifikasi') }}" class="btn btn-success my-3">Verifikasi Akun</a>
 			@include('akun.form_pencarian')
 			<table class="table">
 				<thead>

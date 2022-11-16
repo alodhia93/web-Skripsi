@@ -6,11 +6,6 @@ use Illuminate\Http\Request;
 use App\Training;
 use Session;
 use DB;
-use Illuminate\Support\Facades\Storage; 
-use App\Imports\TrainingImport;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Filesystem\Filesystem;
-use Validator;
 
 
 class TrainingController extends Controller
@@ -32,14 +27,7 @@ class TrainingController extends Controller
         $halaman = 'training';
         $training = Training::paginate(25);
 
-        if ($training->isEmpty()) {
-            $cek = $training->isEmpty();
-        }else{
-            $cek = false;
-        }
-        
-        $page = true;
-        return view('training.index', compact('halaman','training', 'cek','page'));
+        return view('training.index', compact('halaman','training'));
     }
 
     /**

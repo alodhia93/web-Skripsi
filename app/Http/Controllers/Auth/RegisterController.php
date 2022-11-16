@@ -8,6 +8,9 @@ use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Storage;
+use Illuminate\Support\Facades\File;
+
 
 class RegisterController extends Controller
 {
@@ -50,9 +53,14 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'nim' => ['required', 'string', 'max:255', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'jenisKelamin' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255'],
+            'prodi' => ['required', 'string', 'max:255'],
+            'fakultas' => ['required', 'string', 'max:255'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'foto'   => 'required|image|mimes:jpg,jpeg,png',
         ]);
     }
 
@@ -64,10 +72,31 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+        $request = request();
+
+        //$data = $request->all();
+
+        if ($request->hasFile('foto')) {
+            $foto = $request->file('foto');
+            $ext = $foto->getClientOriginalExtension();
+            if ($request->file('foto')->isValid()) {
+                $fotoNama = date('YmdHis'). ".$ext";
+                $path = 'fotoUpload';
+                $request->file('foto')->move($path, $fotoNama);
+                $data['foto'] = $fotoNama;
+            }
+        }
+        $data['password'] = bcrypt($data['password']);
         return User::create([
-            'name' => $data['name'],
+            'nim' => $data['nim'],
+            'nama' => $data['name'],
+            'Jenis_Kelamin' => $data['jenisKelamin'],
             'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'prodi' => $data['prodi'],
+            'fakultas' => $data['fakultas'],
+            'foto' => $data['foto'],
+            'level' => $data['level'],
+            'password' => $data['password'],
         ]);
     }
 }

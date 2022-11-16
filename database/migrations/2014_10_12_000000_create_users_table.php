@@ -18,9 +18,11 @@ class CreateUsersTable extends Migration
             $table->string('nim')->unique();
             $table->string('nama');
             $table->string('email');
-            $table->string('jenisKelamin');
+            $table->string('Jenis_Kelamin');
             $table->string('prodi');
+            $table->string('fakultas');
             $table->string('password');
+            $table->string('foto')->nullable();
             $table->enum('level', ['mahasiswa', 'admin']);
             $table->rememberToken();
             $table->timestamps();

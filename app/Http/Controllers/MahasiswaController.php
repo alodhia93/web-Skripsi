@@ -32,15 +32,8 @@ class MahasiswaController extends Controller
 
         $halaman = 'mahasiswa';
         //return view('mahasiswa.index', compact('mahasiswa','halaman'));
-
-        $prediksi = array();
-
-        foreach($mahasiswa as $ms){
-            $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $ms->nim)->json();
-            $prediksi[] = $client[0]['prediction(diterimaBulanStlhLulus)'];
-        }
         
-        return view('mahasiswa.index', compact(['mahasiswa','halaman','prediksi']));
+        return view('mahasiswa.index', compact(['mahasiswa','halaman']));
     }
 
     public function export() 
@@ -51,53 +44,14 @@ class MahasiswaController extends Controller
     {
         $halaman = 'mahasiswa';
         $search = trim($request->input('search'));
-        $prediksi = trim($request->input('prediksi'));
-        $fakultas = trim($request->input('fakultas'));
-        $namaAtauNim = trim($request->input('namaAtauNim'));
         if (! empty($search)) {
-            $this->validate($request, [
-                'namaAtauNim' => 'required'
-            ]);
 
-            $query = Mahasiswa::where($namaAtauNim, 'LIKE', '%' . $search . '%');
-            (! empty($prediksi)) ? $query->where('prediksi', $prediksi ) : '';
-            (! empty($fakultas)) ? $query->where('fakultas', $fakultas ) : '';
+            $query = Mahasiswa::where('nama_mahasiswa', 'LIKE', '%' . $search . '%');
             $mahasiswa = $query->paginate(25);
-            $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
-            $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
-            $paging = (! empty($namaAtauNim)) ? $mahasiswa->appends(['namaAtauNim' => $namaAtauNim]) : '';
             $paging = (! empty($search)) ? $mahasiswa->appends(['search' => $search]) : '';
             $cek = false;
             $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
-        }
-        if (! empty($prediksi) && ! empty($fakultas)) {
-            $query = Mahasiswa::where([
-                ['prediksi', $prediksi],
-                ['fakultas', $fakultas]
-            ] );
-            $mahasiswa = $query->paginate(25);
-            $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
-            $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
-            $cek = false;
-            $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
-        }
-        if (! empty($prediksi)) {
-            $query = Mahasiswa::where('prediksi', $prediksi);
-            $mahasiswa = $query->paginate(25);
-            $paging = (! empty($prediksi)) ? $mahasiswa->appends(['prediksi' => $prediksi]) : '';
-            $cek = false;
-            $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
-        }
-        if (! empty($fakultas)) {
-            $query = Mahasiswa::where('fakultas', $fakultas);
-            $mahasiswa = $query->paginate(25);
-            $paging = (! empty($fakultas)) ? $mahasiswa->appends(['fakultas' => $fakultas]) : '';
-            $cek = false;
-            $page = true;
-            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search', 'namaAtauNim', 'fakultas', 'prediksi'));
+            return view('mahasiswa.index', compact('halaman','mahasiswa', 'cek','page', 'search'));
         }
         return redirect('mahasiswa');
        }
@@ -160,11 +114,7 @@ class MahasiswaController extends Controller
     {
         $halaman = 'mahasiswa'; 
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/procTrain?nim='. $mahasiswa->nim)->json();
-        
-        $prediksi = $client[0]['prediction(diterimaBulanStlhLulus)'];
-
-        return view('mahasiswa.show', compact('mahasiswa','prediksi','halaman'));
+        return view('mahasiswa.show', compact('mahasiswa','halaman'));
     }
 
     /**

@@ -6,13 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Mahasiswa;
 use Auth;
-use Storage;
-use Illuminate\Support\Facades\File;
 use Validator;
 use Session;
-use App\Mail\VerifikasiEmail;
-use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\AkunRequest;
 use App\Http\Controllers\MahasiswaController;
 
 class AkunController extends Controller
@@ -32,8 +27,7 @@ class AkunController extends Controller
     
     public function index()
     {
-        $akun = User::paginate(25)->where('verifikasi', '1');
-        $akun = $akun->except(2);
+        $akun = User::paginate(25)->where('level', 'mahasiswa');
         $halaman = 'akun';
 
         return view('akun.index', compact('halaman','akun'));
@@ -53,26 +47,17 @@ class AkunController extends Controller
     {
         $halaman = 'akun';
         $search = trim($request->input('search'));
-        $fakultas = trim($request->input('fakultas'));
-        $namaAtauNim = trim($request->input('namaAtauNim'));
         if (! empty($search)) {
-            $this->validate($request, [
-                'namaAtauNim' => 'required'
-            ]);
 
             $query = User::where([
-                [$namaAtauNim, 'LIKE', '%' . $search . '%'],
-                ['verifikasi', '1'],
+                ['nama', 'LIKE', '%' . $search . '%'],
                 ['level', '!=', 'admin']
             ] );
-            (! empty($fakultas)) ? $query->where('fakultas', $fakultas ) : '';
             $akun = $query->paginate(25);
-            $paging = (! empty($fakultas)) ? $akun->appends(['fakultas' => $fakultas]) : '';
-            $paging = (! empty($namaAtauNim)) ? $akun->appends(['namaAtauNim' => $namaAtauNim]) : '';
             $paging = (! empty($search)) ? $akun->appends(['search' => $search]) : '';
             $cek = false;
             $page = true;
-            return view('akun.index', compact('halaman','akun', 'cek','page', 'search', 'namaAtauNim', 'fakultas'));
+            return view('akun.index', compact('halaman','akun', 'cek','page', 'search'));
         }
         if (! empty($fakultas)) {
             $query = User::where([
