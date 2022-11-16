@@ -31,7 +31,6 @@ class MahasiswaController extends Controller
         $mahasiswa = Mahasiswa::paginate(25);
 
         $halaman = 'mahasiswa';
-        //return view('mahasiswa.index', compact('mahasiswa','halaman'));
         
         return view('mahasiswa.index', compact(['mahasiswa','halaman']));
     }
