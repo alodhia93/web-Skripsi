@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Login') }}</div>
-                <img src="{{ asset('fotoUpload/unsri.png') }}" style="align-content: center" width="200">
+                <img src="{{ asset('fotoUpload/unsri.png') }}" class="center" width="150">
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
@@ -41,13 +41,15 @@
 
                         <div class="form-group row">
                             <div class="col-md-6 offset-md-4">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                
+                                <a class="nav-link" style="text-align: center" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                
                             </div>
                         </div>
 
                         <div class="form-group row mb-0">
                             <div class="col-md-8 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn btn-primary" style="position: absolute; top: 60%; left:30%; -ms-transform: translateY(-60%); transform: translateY(-60%);">
                                     {{ __('Login') }}
                                 </button>
 

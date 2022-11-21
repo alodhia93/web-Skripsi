@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Register') }}</div>
-                <img src="{{ asset('fotoUpload/unsri.png') }}" style="align-content: center" width="200">
+                <img src="{{ asset('fotoUpload/unsri.png') }}" class="center" width="200">
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                         @csrf

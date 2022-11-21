@@ -4813,6 +4813,21 @@ input[type="button"].btn-block {
   padding: 1.25rem;
 }
 
+.center{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vertical-center{
+  margin: 0;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+
 .card-title {
   margin-bottom: 0.75rem;
 }

@@ -89,7 +89,7 @@ class PrediksiController extends Controller
 
         $mahasiswa = Mahasiswa::firstWhere('nim_mahasiswa',Auth::user()->nim);
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/fridosql?nim_mahasiswa='. $mahasiswa->nim_mahasiswa)->json();
+        $client = Http::withBasicAuth('admin','tioganteng')->get('http://Alodhia:8580/api/rest/process/skripsiService?nim_mahasiswa='. $mahasiswa->nim_mahasiswa)->json();
         
         $Dengan_Pujian = $client['prediction(predikat_IPK_Dengan_Pujian)'];
         $Sangat_Memuaskan = $client['prediction(predikat_IPK_Sangat_Memuaskan)'];
@@ -173,7 +173,7 @@ class PrediksiController extends Controller
         }
         $data->update($request->all());
 
-        $client = Http::withBasicAuth('admin','94k0z4007')->get('http://desktop-qo1l6ph:8080/api/rest/process/fridosql?nim_mahasiswa='. $data->nim_mahasiswa)->json();
+        $client = Http::withBasicAuth('admin','tioganteng')->get('http://Alodhia:8580/api/rest/process/skripsiService?nim_mahasiswa='. $data->nim_mahasiswa)->json();
         
         $Dengan_Pujian = $client['prediction(predikat_IPK_Dengan_Pujian)'];
         $Sangat_Memuaskan = $client['prediction(predikat_IPK_Sangat_Memuaskan)'];

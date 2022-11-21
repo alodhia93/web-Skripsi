@@ -66,7 +66,7 @@
     <title>Prediksi IPK</title>
   </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #eef084;">  
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #76b5c5;">  
         <div class="container">
             <a class="navbar-brand" href="{{ url('/') }}">Prediksi IPK</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -125,16 +125,7 @@
 				@endif
                 
 
-                @if (!empty($halaman) && $halaman == 'about')
-                  <li class="nav-item active">
-                  <a class="nav-link" href="{{ url('/about') }}"><b>Tentang</b><span class="sr-only">(current)</span></a>
-                  </li> 
-                    
-                @else
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ url('/about') }}">Tentang</a>
-                  </li>
-                @endif
+                
               
             </ul>
             <ul class="nav justify-content-end">
