@@ -145,11 +145,11 @@ class AkunController extends Controller
     public function destroy($id)
     {
         $akun = User::where('id',$id)->first();
-        $mahasiswa = Mahasiswa::where('nim',$akun->nim)->first();
-        echo $akun->nim;
+        //$mahasiswa = Mahasiswa::where('nim',$akun->nim)->first();
+        //echo $akun->nim;
         //$mahasiswa->delete();
-        File::delete('kpmUpload/'.$akun->kpm);
-        Mail::to($akun->email)->send(new VerifikasiEmail($akun->nama, '3'));
+        //File::delete('kpmUpload/'.$akun->kpm);
+        //Mail::to($akun->email)->send(new VerifikasiEmail($akun->nama, '3'));
         $akun->delete();
         Session::flash('flash_message','Akun Mahasiswa Telah Dihapus');
         return redirect('akun');
