@@ -30,10 +30,10 @@ class CreateTableDataMahasiswa extends Migration
             $table->integer('predikat_IPK_Memuaskan')->nullable();
             $table->timestamps();
 
-            /*$table->foreign('nim_mahasiswa')
+            $table->foreign('nim_mahasiswa')
                   ->references('nim')->on('users')
                   ->onDelete('cascade')
-                  ->onUpdate('cascade');*/
+                  ->onUpdate('cascade');
         });
     }
 
